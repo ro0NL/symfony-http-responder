@@ -1,6 +1,7 @@
 # Symfony HTTP Responder
 
 [![Build status][master:travis:img]][master:travis]
+[![Latest Stable Version][packagist:img]][packagist]
 
 [ADR][wiki:adr] implemented in a nutshell:
 
@@ -8,8 +9,8 @@
 <?php
 namespace App\Controller;
 
-use �\Responder;
-use �\RespondTemplate;
+use ro0NL\HttpResponder\Responder;
+use ro0NL\HttpResponder\RespondTemplate;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,4 +37,6 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
 [master:travis]: https://travis-ci.org/ro0NL/symfony-http-responder
 [master:travis:img]: https://img.shields.io/travis/ro0NL/symfony-http-responder/master.svg?style=flat-square
+[packagist]: https://packagist.org/packages/ro0NL/http-responder
+[packagist:img]: https://img.shields.io/packagist/v/ro0NL/http-responder.svg?style=flat-square
 [wiki:adr]: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
