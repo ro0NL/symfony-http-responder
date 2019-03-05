@@ -1,0 +1,40 @@
+{
+    "name": "ro0nl/http-responder",
+    "type": "symfony-bundle",
+    "description": "A Symfony HTTP responder",
+    "keywords": [
+        "symfony",
+        "twig",
+        "http",
+        "responder",
+        "adr"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roland Franssen",
+            "email": "franssen.roland@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3.0",
+        "symfony/http-foundation": "^4.2"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ro0NL\\HttpResponder\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
