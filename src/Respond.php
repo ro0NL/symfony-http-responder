@@ -28,10 +28,9 @@ abstract class Respond
 
     public function withStatus(int $status): self
     {
-        $respond = clone $this;
-        $respond->status = $status;
+        $this->status = $status;
 
-        return $respond;
+        return $this;
     }
 
     /**
@@ -39,10 +38,9 @@ abstract class Respond
      */
     public function withHeaders(array $headers): self
     {
-        $respond = clone $this;
-        $respond->headers = $headers;
+        $this->headers = $headers;
 
-        return $respond;
+        return $this;
     }
 
     /**
@@ -50,9 +48,8 @@ abstract class Respond
      */
     public function withFlashes(array $flashes): self
     {
-        $respond = clone $this;
-        $respond->flashes = $flashes;
+        $this->flashes = $flashes;
 
-        return $respond;
+        return $this;
     }
 }

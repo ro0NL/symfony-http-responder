@@ -37,25 +37,22 @@ final class RespondRouteRedirect extends Respond
 
     public function withAbsoluteUrl(): self
     {
-        $respond = clone $this;
-        $respond->referenceType = UrlGeneratorInterface::ABSOLUTE_URL;
+        $this->referenceType = UrlGeneratorInterface::ABSOLUTE_URL;
 
-        return $respond;
+        return $this;
     }
 
     public function withRelativePath(): self
     {
-        $respond = clone $this;
-        $respond->referenceType = UrlGeneratorInterface::RELATIVE_PATH;
+        $this->referenceType = UrlGeneratorInterface::RELATIVE_PATH;
 
-        return $respond;
+        return $this;
     }
 
     public function withNetworkPath(): self
     {
-        $respond = clone $this;
-        $respond->referenceType = UrlGeneratorInterface::NETWORK_PATH;
+        $this->referenceType = UrlGeneratorInterface::NETWORK_PATH;
 
-        return $respond;
+        return $this;
     }
 }
