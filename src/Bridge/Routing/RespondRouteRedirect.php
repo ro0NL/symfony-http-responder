@@ -26,13 +26,36 @@ final class RespondRouteRedirect extends Respond
     /**
      * @var int
      */
-    public $referenceType;
+    public $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
 
-    public function __construct(string $name, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function __construct(string $name, array $parameters = [])
     {
         $this->status = Response::HTTP_FOUND;
         $this->name = $name;
         $this->parameters = $parameters;
-        $this->referenceType = $referenceType;
+    }
+
+    public function withAbsoluteUrl(): self
+    {
+        $respond = clone $this;
+        $respond->referenceType = UrlGeneratorInterface::ABSOLUTE_URL;
+
+        return $respond;
+    }
+
+    public function withRelativePath(): self
+    {
+        $respond = clone $this;
+        $respond->referenceType = UrlGeneratorInterface::RELATIVE_PATH;
+
+        return $respond;
+    }
+
+    public function withNetworkPath(): self
+    {
+        $respond = clone $this;
+        $respond->referenceType = UrlGeneratorInterface::NETWORK_PATH;
+
+        return $respond;
     }
 }
