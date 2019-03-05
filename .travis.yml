@@ -1,0 +1,29 @@
+notifications:
+  email: false
+
+language: generic
+dist: xenial
+services:
+  - docker
+
+branches:
+  only:
+    - master
+    - /^\d\.\d$/
+
+jobs:
+  include:
+    - stage: Unit tests
+    - env: DEPS=low
+    - stage: Code quality
+      script:
+        - make cs
+        - make sa
+
+script:
+  - if [[ ${DEPS} == low ]]; then make update-lowest; else make update; fi
+  - make phpunit
+
+cache:
+  directories:
+    - var/

@@ -6,6 +6,7 @@ namespace ro0NL\HttpResponder\Bridge\Routing;
 
 use ro0NL\HttpResponder\Respond;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
