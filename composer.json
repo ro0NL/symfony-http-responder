@@ -1,6 +1,6 @@
 {
     "name": "ro0nl/http-responder",
-    "type": "symfony-bundle",
+    "type": "library",
     "description": "A Symfony HTTP responder",
     "keywords": [
         "symfony",
