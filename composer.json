@@ -4,7 +4,7 @@
     "description": "A Symfony HTTP responder",
     "keywords": [
         "symfony",
-        "twig",
+        "symfony-bundle",
         "http",
         "responder",
         "adr"
