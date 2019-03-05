@@ -4,47 +4,39 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Tests\Bridge\Twig;
 
-use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Bridge\Twig\RespondTemplate;
 use ro0NL\HttpResponder\Bridge\Twig\TwigResponder;
-use ro0NL\HttpResponder\Exception\BadRespondTypeException;
-use ro0NL\HttpResponder\Respond;
-use Symfony\Component\HttpFoundation\Response;
+use ro0NL\HttpResponder\Responder;
+use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
-final class TwigResponderTest extends TestCase
+final class TwigResponderTest extends ResponderTestCase
 {
     public function testRespond(): void
     {
-        $responder = new TwigResponder(new Environment(new ArrayLoader([
+        $responder = $this->getResponder([
             'template' => 'hello twig',
-        ])));
+        ]);
         $response = $responder->respond(new RespondTemplate('template'));
 
-        self::assertInstanceOf(Response::class, $response);
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('hello twig', $response->getContent());
     }
 
     public function testRespondWithContext(): void
     {
-        $responder = new TwigResponder(new Environment(new ArrayLoader([
+        $responder = $this->getResponder([
             'template' => 'hello {{ name }}',
-        ])));
+        ]);
         $response = $responder->respond(new RespondTemplate('template', ['name' => 'symfony']));
 
-        self::assertInstanceOf(Response::class, $response);
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('hello symfony', $response->getContent());
     }
 
-    public function testUnknownRespond(): void
+    protected function getResponder(array $templates = []): Responder
     {
-        $responder = new TwigResponder(new Environment(new ArrayLoader()));
-
-        $this->expectException(BadRespondTypeException::class);
-
-        $responder->respond($this->getMockForAbstractClass(Respond::class));
+        return new TwigResponder(new Environment(new ArrayLoader($templates)));
     }
 }
