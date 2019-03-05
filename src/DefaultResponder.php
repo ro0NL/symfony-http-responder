@@ -23,6 +23,10 @@ final class DefaultResponder implements Responder
             return new RedirectResponse($respond->url, $respond->status, $respond->headers);
         }
 
+        if ($respond instanceof RespondEmpty) {
+            return new Response('', $respond->status, $respond->headers);
+        }
+
         throw BadRespondTypeException::create($this, $respond);
     }
 }

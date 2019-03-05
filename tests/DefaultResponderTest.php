@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\DefaultResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use ro0NL\HttpResponder\Respond;
+use ro0NL\HttpResponder\RespondEmpty;
 use ro0NL\HttpResponder\RespondRaw;
 use ro0NL\HttpResponder\RespondRedirect;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,6 +34,16 @@ final class DefaultResponderTest extends TestCase
         self::assertInstanceOf(RedirectResponse::class, $response);
         self::assertSame(302, $response->getStatusCode());
         self::assertSame('/path', $response->headers->get('location'));
+    }
+
+    public function testRespondEmpty(): void
+    {
+        $responder = new DefaultResponder();
+        $response = $responder->respond(new RespondEmpty());
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertSame(204, $response->getStatusCode());
+        self::assertSame('', $response->getContent());
     }
 
     public function testUnknownRespond(): void
