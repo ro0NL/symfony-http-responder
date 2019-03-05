@@ -39,7 +39,7 @@ final class DefaultResponderTest extends TestCase
     {
         $responder = new DefaultResponder();
 
-        self::expectException(BadRespondTypeException::class);
+        $this->expectException(BadRespondTypeException::class);
 
         $responder->respond($this->getMockForAbstractClass(Respond::class));
     }

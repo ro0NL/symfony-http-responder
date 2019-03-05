@@ -43,7 +43,7 @@ final class TwigResponderTest extends TestCase
     {
         $responder = new TwigResponder(new Environment(new ArrayLoader()));
 
-        self::expectException(BadRespondTypeException::class);
+        $this->expectException(BadRespondTypeException::class);
 
         $responder->respond($this->getMockForAbstractClass(Respond::class));
     }
