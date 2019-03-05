@@ -9,6 +9,7 @@ use ro0NL\HttpResponder\Bridge\Twig\TwigResponder;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Twig\Environment;
+use Twig\Error\LoaderError;
 use Twig\Loader\ArrayLoader;
 
 final class TwigResponderTest extends ResponderTestCase
@@ -33,6 +34,15 @@ final class TwigResponderTest extends ResponderTestCase
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('hello symfony', $response->getContent());
+    }
+
+    public function testRespondWithUnknownTemplate(): void
+    {
+        $responder = $this->getResponder();
+
+        $this->expectException(LoaderError::class);
+
+        $responder->respond(new RespondTemplate('template'));
     }
 
     protected function getResponder(array $templates = []): Responder
