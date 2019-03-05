@@ -20,6 +20,10 @@
         "php": "^7.3.0",
         "symfony/http-foundation": "^4.2"
     },
+    "require-dev": {
+        "twig/twig": "^2.0",
+        "symfony/routing": "^4.2"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
