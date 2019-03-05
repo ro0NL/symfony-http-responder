@@ -8,8 +8,8 @@
 ```php
 <?php
 
-use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Bridge\Twig\RespondTemplate;
+use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
