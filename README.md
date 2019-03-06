@@ -3,7 +3,8 @@
 [![Build status][master:travis:img]][master:travis]
 [![Latest Stable Version][packagist:img]][packagist]
 
-[ADR][wiki:adr] implemented in a nutshell:
+[ADR][wiki:adr] implemented in a nutshell. A viable alternative to [`AbstractController`][sf:controller], or most base
+controllers really.
 
 ```php
 <?php
@@ -31,3 +32,4 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 [packagist]: https://packagist.org/packages/ro0NL/http-responder
 [packagist:img]: https://img.shields.io/packagist/v/ro0NL/http-responder.svg?style=flat-square
 [wiki:adr]: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
+[sf:controller]: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
