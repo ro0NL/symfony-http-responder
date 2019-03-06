@@ -17,10 +17,10 @@ final class DefaultResponderTest extends ResponderTestCase
     public function testRespondRaw(): void
     {
         $responder = $this->getResponder();
-        $response = $responder->respond(new RespondRaw('"hello" <world>™'));
+        $response = $responder->respond(new RespondRaw('"hello" & <world>™'));
 
         self::assertResponse($response);
-        self::assertSame('"hello" <world>™', $response->getContent());
+        self::assertSame('"hello" & <world>™', $response->getContent());
     }
 
     public function testRespondRedirect(): void
