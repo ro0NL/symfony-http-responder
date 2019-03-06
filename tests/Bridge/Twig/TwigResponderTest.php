@@ -16,10 +16,8 @@ final class TwigResponderTest extends ResponderTestCase
 {
     public function testRespond(): void
     {
-        $responder = $this->getResponder([
-            'template' => 'hello twig',
-        ]);
-        $response = $responder->respond(new RespondTemplate('template'));
+        $responder = $this->getResponder();
+        $response = $responder->respond(new RespondTemplate('default'));
 
         self::assertResponse($response);
         self::assertSame('hello twig', $response->getContent());
@@ -47,6 +45,15 @@ final class TwigResponderTest extends ResponderTestCase
 
     protected function getResponder(array $templates = []): Responder
     {
+        if (!isset($templates['default'])) {
+            $templates['default'] = 'hello twig';
+        }
+
         return new TwigResponder(new Environment(new ArrayLoader($templates)));
+    }
+
+    protected function getResponds(): iterable
+    {
+        yield new RespondTemplate('default');
     }
 }

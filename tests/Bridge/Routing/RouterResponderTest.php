@@ -73,4 +73,9 @@ final class RouterResponderTest extends ResponderTestCase
 
         return new RouterResponder($urlGenerator);
     }
+
+    protected function getResponds(): iterable
+    {
+        yield new RespondRouteRedirect('name');
+    }
 }

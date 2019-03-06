@@ -44,6 +44,16 @@ abstract class Respond
     }
 
     /**
+     * @param string|string[] $value
+     */
+    public function withHeader(string $name, $value): self
+    {
+        $this->headers[$name] = (array) $value;
+
+        return $this;
+    }
+
+    /**
      * @param string[]|string[][] $flashes
      */
     public function withFlashes(array $flashes): self

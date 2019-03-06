@@ -15,16 +15,109 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class ResponderTestCase extends TestCase
 {
+    protected const CATCH_ALL_RESPONDER = false;
     protected const DEFAULT_RESPONSE_CLASS = Response::class;
     protected const DEFAULT_RESPONSE_STATUS = 200;
+
+    public function testRespondWithStatus(): void
+    {
+        $responder = $this->getResponder();
+        $asserted = false;
+
+        foreach ($this->getResponds() as $respond) {
+            $response = $responder->respond($respond->withStatus(1 + $prevStatus = $respond->status));
+
+            self::assertSame(1 + $prevStatus, $response->getStatusCode());
+
+            $asserted = true;
+        }
+
+        if (!$asserted) {
+            $this->addToAssertionCount(1);
+        }
+    }
+
+    public function testRespondWithInvalidStatus(): void
+    {
+        $responder = $this->getResponder();
+        $asserted = false;
+
+        foreach ($this->getResponds() as $respond) {
+            try {
+                $responder->respond($respond->withStatus(999));
+                self::fail();
+            } catch (\LogicException $e) {
+                $this->addToAssertionCount(1);
+            }
+
+            $asserted = true;
+        }
+
+        if (!$asserted) {
+            $this->addToAssertionCount(1);
+        }
+    }
+
+    public function testRespondWithHeaders(): void
+    {
+        $responder = $this->getResponder();
+        $asserted = false;
+
+        foreach ($this->getResponds() as $respond) {
+            $response = $responder->respond($respond->withHeaders([
+                'h1' => 'v',
+                'H2' => ['v1', 'V2'],
+            ]));
+            $headers = $response->headers->allPreserveCase();
+
+            self::assertArrayHasKey('h1', $headers);
+            self::assertSame(['v'], $headers['h1']);
+            self::assertArrayHasKey('H2', $headers);
+            self::assertSame(['v1', 'V2'], $headers['H2']);
+
+            $asserted = true;
+        }
+
+        if (!$asserted) {
+            $this->addToAssertionCount(1);
+        }
+    }
+
+    public function testRespondWithHeader(): void
+    {
+        $responder = $this->getResponder();
+        $asserted = false;
+
+        foreach ($this->getResponds() as $respond) {
+            $response = $responder->respond($respond->withHeader('h1', 'v')->withHeader('H2', ['v1', 'V2']));
+            $headers = $response->headers->allPreserveCase();
+
+            self::assertArrayHasKey('h1', $headers);
+            self::assertSame(['v'], $headers['h1']);
+            self::assertArrayHasKey('H2', $headers);
+            self::assertSame(['v1', 'V2'], $headers['H2']);
+
+            $asserted = true;
+        }
+
+        if (!$asserted) {
+            $this->addToAssertionCount(1);
+        }
+    }
 
     public function testUnknownRespond(): void
     {
         $responder = $this->getResponder();
 
-        $this->expectException(BadRespondTypeException::class);
+        if (!static::CATCH_ALL_RESPONDER) {
+            $this->expectException(BadRespondTypeException::class);
+        }
 
         $responder->respond($this->getMockForAbstractClass(Respond::class));
+
+        if (static::CATCH_ALL_RESPONDER) {
+            $this->addToAssertionCount(1);
+        }
     }
 
     protected static function assertResponse(Response $response, int $status = null): void
@@ -37,4 +130,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     abstract protected function getResponder(): Responder;
+
+    /**
+     * @return iterable|Respond[]
+     */
+    abstract protected function getResponds(): iterable;
 }

@@ -46,4 +46,11 @@ final class DefaultResponderTest extends ResponderTestCase
     {
         return new DefaultResponder();
     }
+
+    protected function getResponds(): iterable
+    {
+        yield new RespondRaw('contents');
+        yield new RespondRedirect('/path');
+        yield new RespondEmpty();
+    }
 }
