@@ -21,7 +21,7 @@ final class TwigResponderTest extends ResponderTestCase
         ]);
         $response = $responder->respond(new RespondTemplate('template'));
 
-        self::assertSame(200, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('hello twig', $response->getContent());
     }
 
@@ -32,7 +32,7 @@ final class TwigResponderTest extends ResponderTestCase
         ]);
         $response = $responder->respond(new RespondTemplate('template', ['name' => 'symfony']));
 
-        self::assertSame(200, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('hello symfony', $response->getContent());
     }
 

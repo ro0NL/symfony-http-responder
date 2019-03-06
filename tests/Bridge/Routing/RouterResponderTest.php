@@ -8,16 +8,20 @@ use ro0NL\HttpResponder\Bridge\Routing\RespondRouteRedirect;
 use ro0NL\HttpResponder\Bridge\Routing\RouterResponder;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class RouterResponderTest extends ResponderTestCase
 {
+    protected const DEFAULT_RESPONSE_CLASS = RedirectResponse::class;
+    protected const DEFAULT_RESPONSE_STATUS = 302;
+
     public function testRespond(): void
     {
         $responder = $this->getResponder();
         $response = $responder->respond(new RespondRouteRedirect('name'));
 
-        self::assertSame(302, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('name/1/[]', $response->headers->get('location'));
     }
 
@@ -26,7 +30,7 @@ final class RouterResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond(new RespondRouteRedirect('name', ['key' => 'value']));
 
-        self::assertSame(302, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('name/1/{"key":"value"}', $response->headers->get('location'));
     }
 
@@ -35,7 +39,7 @@ final class RouterResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond((new RespondRouteRedirect('name'))->withAbsoluteUrl());
 
-        self::assertSame(302, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('name/0/[]', $response->headers->get('location'));
     }
 
@@ -44,7 +48,7 @@ final class RouterResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond((new RespondRouteRedirect('name'))->withRelativePath());
 
-        self::assertSame(302, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('name/2/[]', $response->headers->get('location'));
     }
 
@@ -53,7 +57,7 @@ final class RouterResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond((new RespondRouteRedirect('name'))->withNetworkPath());
 
-        self::assertSame(302, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('name/3/[]', $response->headers->get('location'));
     }
 

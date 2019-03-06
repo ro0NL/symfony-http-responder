@@ -19,7 +19,7 @@ final class DefaultResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond(new RespondRaw('"hello" <world>™'));
 
-        self::assertSame(200, $response->getStatusCode());
+        self::assertResponse($response);
         self::assertSame('"hello" <world>™', $response->getContent());
     }
 
@@ -28,8 +28,8 @@ final class DefaultResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond(new RespondRedirect('/path'));
 
+        self::assertResponse($response, 302);
         self::assertInstanceOf(RedirectResponse::class, $response);
-        self::assertSame(302, $response->getStatusCode());
         self::assertSame('/path', $response->headers->get('location'));
     }
 
@@ -38,7 +38,7 @@ final class DefaultResponderTest extends ResponderTestCase
         $responder = $this->getResponder();
         $response = $responder->respond(new RespondEmpty());
 
-        self::assertSame(204, $response->getStatusCode());
+        self::assertResponse($response, 204);
         self::assertSame('', $response->getContent());
     }
 
