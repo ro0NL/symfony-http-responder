@@ -3,7 +3,7 @@
 [![Build status][master:travis:img]][master:travis]
 [![Latest Stable Version][packagist:img]][packagist]
 
-[ADR][wiki:adr] implemented in a nutshell. A viable alternative to [`AbstractController`][sf:controller], or most base
+[ADR][wiki:adr] implemented in a nutshell. A viable alternative for [`AbstractController`][sf:controller], or most base
 controllers really.
 
 ```php
