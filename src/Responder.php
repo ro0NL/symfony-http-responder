@@ -8,6 +8,8 @@ use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * A responder transforms a Respond into a Response.
+ *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
 interface Responder

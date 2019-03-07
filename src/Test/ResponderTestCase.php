@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class ResponderTestCase extends TestCase
 {
-    protected const CATCH_ALL_RESPONDER = false;
     protected const DEFAULT_RESPONSE_CLASS = Response::class;
     protected const DEFAULT_RESPONSE_STATUS = 200;
 
@@ -109,15 +108,9 @@ abstract class ResponderTestCase extends TestCase
     {
         $responder = $this->getResponder();
 
-        if (!static::CATCH_ALL_RESPONDER) {
-            $this->expectException(BadRespondTypeException::class);
-        }
+        $this->expectException(BadRespondTypeException::class);
 
         $responder->respond($this->getMockForAbstractClass(Respond::class));
-
-        if (static::CATCH_ALL_RESPONDER) {
-            $this->addToAssertionCount(1);
-        }
     }
 
     protected static function assertResponse(Response $response, int $status = null): void
