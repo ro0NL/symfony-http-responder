@@ -68,7 +68,7 @@ final class TestChainedResponderAggregate extends AggregatedResponder
     protected function getAggregates(): iterable
     {
         yield TestRespondA::class => function (TestRespondA $respond): Response {
-            return new Response('A ignored', $respond->status, $respond->headers);
+            throw new \LogicException('Should not happen.');
         };
 
         yield TestRespondB::class => function (TestRespondB $respond): Response {
@@ -76,7 +76,7 @@ final class TestChainedResponderAggregate extends AggregatedResponder
         };
 
         yield TestRespondB::class => function (TestRespondB $respond): Response {
-            return new Response('B ignored', $respond->status, $respond->headers);
+            throw new \LogicException('Should not happen.');
         };
     }
 }
