@@ -23,6 +23,8 @@ class SomeHttpAction
 }
 ```
 
+_We call it [Composition over Inheritance][wiki:compositioninheritance]._
+
 # Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md)
@@ -32,4 +34,5 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 [packagist]: https://packagist.org/packages/ro0NL/http-responder
 [packagist:img]: https://img.shields.io/packagist/v/ro0NL/http-responder.svg?style=flat-square
 [wiki:adr]: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
+[wiki:compositioninheritance]: https://en.wikipedia.org/wiki/Composition_over_inheritance
 [sf:controller]: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
