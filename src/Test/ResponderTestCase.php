@@ -21,25 +21,17 @@ abstract class ResponderTestCase extends TestCase
     public function testRespondWithStatus(): void
     {
         $responder = $this->getResponder();
-        $asserted = false;
 
         foreach ($this->getResponds() as $respond) {
             $response = $responder->respond($respond->withStatus(1 + $prevStatus = $respond->status));
 
             self::assertSame(1 + $prevStatus, $response->getStatusCode());
-
-            $asserted = true;
-        }
-
-        if (!$asserted) {
-            $this->addToAssertionCount(1);
         }
     }
 
     public function testRespondWithInvalidStatus(): void
     {
         $responder = $this->getResponder();
-        $asserted = false;
 
         foreach ($this->getResponds() as $respond) {
             try {
@@ -48,19 +40,12 @@ abstract class ResponderTestCase extends TestCase
             } catch (\LogicException $e) {
                 $this->addToAssertionCount(1);
             }
-
-            $asserted = true;
-        }
-
-        if (!$asserted) {
-            $this->addToAssertionCount(1);
         }
     }
 
     public function testRespondWithHeaders(): void
     {
         $responder = $this->getResponder();
-        $asserted = false;
 
         foreach ($this->getResponds() as $respond) {
             $response = $responder->respond($respond->withHeaders([
@@ -73,19 +58,12 @@ abstract class ResponderTestCase extends TestCase
             self::assertSame(['v'], $headers['h1']);
             self::assertArrayHasKey('H2', $headers);
             self::assertSame(['v1', 'V2'], $headers['H2']);
-
-            $asserted = true;
-        }
-
-        if (!$asserted) {
-            $this->addToAssertionCount(1);
         }
     }
 
     public function testRespondWithHeader(): void
     {
         $responder = $this->getResponder();
-        $asserted = false;
 
         foreach ($this->getResponds() as $respond) {
             $response = $responder->respond($respond->withHeader('h1', 'v')->withHeader('H2', ['v1', 'V2']));
@@ -95,12 +73,6 @@ abstract class ResponderTestCase extends TestCase
             self::assertSame(['v'], $headers['h1']);
             self::assertArrayHasKey('H2', $headers);
             self::assertSame(['v1', 'V2'], $headers['H2']);
-
-            $asserted = true;
-        }
-
-        if (!$asserted) {
-            $this->addToAssertionCount(1);
         }
     }
 
