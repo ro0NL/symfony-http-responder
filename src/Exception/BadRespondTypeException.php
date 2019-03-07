@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Exception;
 
-use ro0NL\HttpResponder\Respond;
+use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 
 /**

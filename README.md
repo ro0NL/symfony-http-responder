@@ -9,7 +9,7 @@ controllers really.
 ```php
 <?php
 
-use ro0NL\HttpResponder\Bridge\Twig\RespondTemplate;
+use ro0NL\HttpResponder\Bridge\Twig\Template;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ class SomeHttpAction
 {
     public function __invoke(Request $request, Responder $responder): Response
     {
-        return $responder->respond(new RespondTemplate('home.html.twig'));
+        return $responder->respond(new Template('home.html.twig'));
     }
 }
 ```

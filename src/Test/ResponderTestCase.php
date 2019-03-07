@@ -6,7 +6,7 @@ namespace ro0NL\HttpResponder\Test;
 
 use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
-use ro0NL\HttpResponder\Respond;
+use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
 

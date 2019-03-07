@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ro0NL\HttpResponder;
 
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
+use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -25,7 +25,7 @@ final class RouterResponder extends AggregatedResponder
 
     protected function getAggregates(): iterable
     {
-        yield RespondRouteRedirect::class => function (RespondRouteRedirect $respond): RedirectResponse {
+        yield RouteRedirect::class => function (RouteRedirect $respond): RedirectResponse {
             return new RedirectResponse($this->urlGenerator->generate($respond->name, $respond->parameters, $respond->referenceType), $respond->status, $respond->headers);
         };
     }

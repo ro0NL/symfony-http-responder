@@ -25,7 +25,7 @@ final class TwigResponder extends AggregatedResponder
 
     protected function getAggregates(): iterable
     {
-        yield RespondTemplate::class => function (RespondTemplate $respond): Response {
+        yield Template::class => function (Template $respond): Response {
             return new Response($this->twig->render($respond->name, $respond->context), $respond->status, $respond->headers);
         };
     }

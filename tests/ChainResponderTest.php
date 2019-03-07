@@ -7,7 +7,7 @@ namespace ro0NL\HttpResponder\Tests;
 use ro0NL\HttpResponder\AggregatedResponder;
 use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
-use ro0NL\HttpResponder\Respond;
+use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\Response;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Tests\Bridge\Twig;
 
-use ro0NL\HttpResponder\Bridge\Twig\RespondTemplate;
+use ro0NL\HttpResponder\Bridge\Twig\Template;
 use ro0NL\HttpResponder\Bridge\Twig\TwigResponder;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
@@ -17,7 +17,7 @@ final class TwigResponderTest extends ResponderTestCase
     public function testRespond(): void
     {
         $responder = $this->getResponder();
-        $response = $responder->respond(new RespondTemplate('default'));
+        $response = $responder->respond(new Template('default'));
 
         self::assertResponse($response);
         self::assertSame('hello twig', $response->getContent());
@@ -28,7 +28,7 @@ final class TwigResponderTest extends ResponderTestCase
         $responder = $this->getResponder([
             'template' => 'hello {{ name }}',
         ]);
-        $response = $responder->respond(new RespondTemplate('template', ['name' => 'symfony']));
+        $response = $responder->respond(new Template('template', ['name' => 'symfony']));
 
         self::assertResponse($response);
         self::assertSame('hello symfony', $response->getContent());
@@ -40,7 +40,7 @@ final class TwigResponderTest extends ResponderTestCase
 
         $this->expectException(LoaderError::class);
 
-        $responder->respond(new RespondTemplate('template'));
+        $responder->respond(new Template('template'));
     }
 
     protected function getResponder(array $templates = []): Responder
@@ -54,6 +54,6 @@ final class TwigResponderTest extends ResponderTestCase
 
     protected function getResponds(): iterable
     {
-        yield new RespondTemplate('default');
+        yield new Template('default');
     }
 }

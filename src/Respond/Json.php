@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ro0NL\HttpResponder;
+namespace ro0NL\HttpResponder\Respond;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class RespondJson extends Respond
+final class Json extends Respond
 {
     /**
      * @var mixed

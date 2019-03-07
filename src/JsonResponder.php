@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder;
 
+use ro0NL\HttpResponder\Respond\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -13,7 +14,7 @@ final class JsonResponder extends AggregatedResponder
 {
     protected function getAggregates(): iterable
     {
-        yield RespondJson::class => function (RespondJson $respond): JsonResponse {
+        yield Json::class => function (Json $respond): JsonResponse {
             if ($respond->raw && !\is_string($respond->data)) {
                 throw new \LogicException(sprintf('JSON must be a string, got "%s".', \gettype($respond->data)));
             }

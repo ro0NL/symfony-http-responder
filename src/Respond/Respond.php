@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ro0NL\HttpResponder;
+namespace ro0NL\HttpResponder\Respond;
 
 use Symfony\Component\HttpFoundation\Response;
 

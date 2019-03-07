@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Bridge\Twig;
 
-use ro0NL\HttpResponder\Respond;
+use ro0NL\HttpResponder\Respond\Respond;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class RespondTemplate extends Respond
+final class Template extends Respond
 {
     /**
      * @var string

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace ro0NL\HttpResponder;
+namespace ro0NL\HttpResponder\Respond;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class RespondRedirect extends Respond
+final class Redirect extends Respond
 {
     /**
      * @var string
