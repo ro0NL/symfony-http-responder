@@ -1,0 +1,35 @@
+{
+    "name": "vendor/package",
+    "type": "library",
+    "description": "...",
+    "keywords": [
+        "..."
+    ],
+    "license": "...",
+    "authors": [
+        {
+            "name": "...",
+            "email": "alias@example.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Package\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}

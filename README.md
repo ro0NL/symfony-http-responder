@@ -1,0 +1,3 @@
+# PHP Package Starter-kit
+
+...

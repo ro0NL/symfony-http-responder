@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="https://getpsalm.org/schema/config"
+       xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
+       cacheDirectory="var/psalm"
+       autoloader="var/phpunit/phpunit-7.5/vendor/autoload.php"
+       allowPhpStormGenerics="true"
+       totallyTyped="false">
+    <projectFiles>
+        <directory name="src" />
+        <directory name="tests" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <!-- info = conventional, suppress = false positive -->
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+    </issueHandlers>
+
+    <mockClasses>
+        <class name="PHPUnit\Framework\MockObject\MockObject"/>
+    </mockClasses>
+</psalm>
