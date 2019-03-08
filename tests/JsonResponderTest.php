@@ -113,5 +113,6 @@ final class JsonResponderTest extends ResponderTestCase
     protected function getResponds(): iterable
     {
         yield new Json(null);
+        yield Json::raw('');
     }
 }

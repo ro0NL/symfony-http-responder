@@ -8,9 +8,11 @@ use ro0NL\HttpResponder\DefaultResponder;
 use ro0NL\HttpResponder\Respond\NoContent;
 use ro0NL\HttpResponder\Respond\Raw;
 use ro0NL\HttpResponder\Respond\Redirect;
+use ro0NL\HttpResponder\Respond\Stream;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class DefaultResponderTest extends ResponderTestCase
 {
@@ -42,6 +44,34 @@ final class DefaultResponderTest extends ResponderTestCase
         self::assertSame('', $response->getContent());
     }
 
+    public function testRespondStream(): void
+    {
+        $responder = $this->getResponder();
+        $response = $responder->respond(new Stream(function (): void {
+            echo 'hello stream';
+        }));
+
+        self::assertResponse($response);
+        self::assertInstanceOf(StreamedResponse::class, $response);
+
+        $this->expectOutputString('hello stream');
+
+        $response->sendContent();
+    }
+
+    public function testRespondStreamFromIterable(): void
+    {
+        $responder = $this->getResponder();
+        $response = $responder->respond(Stream::iterable(['hello', ' ', 'stream']));
+
+        self::assertResponse($response);
+        self::assertInstanceOf(StreamedResponse::class, $response);
+
+        $this->expectOutputString('hello stream');
+
+        $response->sendContent();
+    }
+
     protected function getResponder(): Responder
     {
         return new DefaultResponder();
@@ -52,5 +82,8 @@ final class DefaultResponderTest extends ResponderTestCase
         yield new Raw('contents');
         yield new Redirect('/path');
         yield new NoContent();
+        yield new Stream(function (): void {
+        });
+        yield Stream::iterable([]);
     }
 }
