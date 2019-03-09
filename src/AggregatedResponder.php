@@ -13,6 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AggregatedResponder implements ResponderAggregate
 {
+    /**
+     * @psalm-var array<class-string<Respond>, Responder|false>
+     *
+     * @var array
+     */
+    private $cache = [];
+
     final public function respond(Respond $respond): Response
     {
         $responder = $this->getResponder(\get_class($respond));
@@ -24,14 +31,21 @@ abstract class AggregatedResponder implements ResponderAggregate
         return $responder->respond($respond);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getResponder(string $respondClass): ?Responder
     {
+        if (isset($this->cache[$respondClass])) {
+            return $this->cache[$respondClass] ?: null;
+        }
+
         foreach ($this->getAggregates() as $class => $callback) {
             if ($class !== $respondClass) {
                 continue;
             }
 
-            return new class($callback) implements Responder {
+            return $this->cache[$respondClass] = new class($callback) implements Responder {
                 /**
                  * @var callable
                  */
@@ -48,6 +62,8 @@ abstract class AggregatedResponder implements ResponderAggregate
                 }
             };
         }
+
+        $this->cache[$respondClass] = false;
 
         return null;
     }
