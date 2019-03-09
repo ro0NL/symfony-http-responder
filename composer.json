@@ -15,6 +15,9 @@
     "require": {
         "php": "^7.2"
     },
+    "conflict": {
+        "symfony/debug": "<3.4.21"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
