@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Bridge\Twig;
 
-use ro0NL\HttpResponder\AggregatedResponder;
+use ro0NL\HttpResponder\ProvidingResponder;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class TwigResponder extends AggregatedResponder
+final class TwigResponder extends ProvidingResponder
 {
     /**
      * @var Environment
@@ -23,7 +23,7 @@ final class TwigResponder extends AggregatedResponder
         $this->twig = $twig;
     }
 
-    protected function getAggregates(): iterable
+    protected function getProviders(): iterable
     {
         yield Template::class => function (Template $respond): Response {
             return new Response($this->twig->render($respond->name, $respond->context), $respond->status, $respond->headers);

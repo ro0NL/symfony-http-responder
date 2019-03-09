@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class JsonResponder extends AggregatedResponder
+final class JsonResponder extends ProvidingResponder
 {
-    protected function getAggregates(): iterable
+    protected function getProviders(): iterable
     {
         yield Json::class => function (Json $respond): JsonResponse {
             if ($respond->raw && !\is_string($respond->data)) {

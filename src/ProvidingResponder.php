@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-abstract class AggregatedResponder implements ResponderAggregate
+abstract class ProvidingResponder implements ResponderAggregate
 {
     /**
      * @psalm-var array<class-string<Respond>, Responder|false>
@@ -40,7 +40,7 @@ abstract class AggregatedResponder implements ResponderAggregate
             return $this->cache[$respondClass] ?: null;
         }
 
-        foreach ($this->getAggregates() as $class => $callback) {
+        foreach ($this->getProviders() as $class => $callback) {
             if ($class !== $respondClass) {
                 continue;
             }
@@ -71,5 +71,5 @@ abstract class AggregatedResponder implements ResponderAggregate
     /**
      * @return iterable|callable[]
      */
-    abstract protected function getAggregates(): iterable;
+    abstract protected function getProviders(): iterable;
 }

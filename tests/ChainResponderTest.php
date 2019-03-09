@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Tests;
 
-use ro0NL\HttpResponder\AggregatedResponder;
 use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
+use ro0NL\HttpResponder\ProvidingResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
@@ -63,9 +63,9 @@ final class TestChainedResponder implements Responder
 /**
  * @internal
  */
-final class TestChainedResponderAggregate extends AggregatedResponder
+final class TestChainedResponderAggregate extends ProvidingResponder
 {
-    protected function getAggregates(): iterable
+    protected function getProviders(): iterable
     {
         yield TestRespondA::class => function (TestRespondA $respond): Response {
             throw new \LogicException('Should not happen.');

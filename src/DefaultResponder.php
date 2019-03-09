@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class DefaultResponder extends AggregatedResponder
+final class DefaultResponder extends ProvidingResponder
 {
-    protected function getAggregates(): iterable
+    protected function getProviders(): iterable
     {
         yield Raw::class => function (Raw $respond): Response {
             return new Response($respond->contents, $respond->status, $respond->headers);

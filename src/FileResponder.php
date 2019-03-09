@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class FileResponder extends AggregatedResponder
+final class FileResponder extends ProvidingResponder
 {
-    protected function getAggregates(): iterable
+    protected function getProviders(): iterable
     {
         yield File::class => function (File $respond): BinaryFileResponse {
             $public = true;
