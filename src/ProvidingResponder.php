@@ -9,6 +9,10 @@ use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * A providing responder uses pure callable factories mapped to Respond types.
+ *
+ * {@inheritdoc}
+ *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
 abstract class ProvidingResponder implements ResponderAggregate

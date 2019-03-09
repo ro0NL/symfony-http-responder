@@ -9,7 +9,7 @@ use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * A responder transforms a Respond into a Response.
+ * A responder responds to the user request with a representing response.
  *
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
