@@ -27,8 +27,8 @@ final class Extension extends BaseExtension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
-        $loader->load('responders.php');
         $loader->load('services.php');
+        $loader->load('responders.php');
 
         $container->registerForAutoconfiguration(Responder::class)
             ->addTag('http_responder')

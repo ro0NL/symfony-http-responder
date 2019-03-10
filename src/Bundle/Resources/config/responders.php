@@ -16,16 +16,15 @@ return function (ContainerConfigurator $container): void {
             ->private()
             ->autowire()
             ->instanceof(Responder::class)
-                ->tag('http_responder', ['priority' => -100])
+                ->tag('http_responder', ['priority' => -1024])
 
         // core responders
         ->set('.http_responder.default', DefaultResponder::class)
         ->set('.http_responder.file', FileResponder::class)
         ->set('.http_responder.json', JsonResponder::class)
-        ->set('.http_responder.twig', JsonResponder::class)
 
         // bridge responders
-        ->set('.http_responder.routing', RouterResponder::class)
         ->set('.http_responder.twig', TwigResponder::class)
+        ->set('.http_responder.routing', RouterResponder::class)
     ;
 };

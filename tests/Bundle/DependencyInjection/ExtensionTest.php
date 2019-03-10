@@ -6,6 +6,7 @@ namespace ro0NL\HttpResponder\Tests\Bundle\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Bundle\DependencyInjection\Extension;
+use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
@@ -25,10 +26,15 @@ final class ExtensionTest extends TestCase
         $container = $this->createContainer();
 
         /** @var Definition $responder */
-        $responder = $container->getDefinition(TestService::class)->getArgument(0);
+        $decorator = $container->getDefinition(TestService::class)->getArgument(0);
+        self::assertSame(TestDecoratingResponder::class, $decorator->getClass());
+
+        /** @var Definition $responder */
+        $responder = $decorator->getArgument(0);
+        self::assertSame(ChainResponder::class, $responder->getClass());
+
         /** @var IteratorArgument $responders */
         $responders = $responder->getArgument(0);
-
         self::assertInstanceOf(IteratorArgument::class, $responders);
         self::assertSame([
             TestResponder::class,
@@ -40,6 +46,7 @@ final class ExtensionTest extends TestCase
         ], array_map(function (Reference $ref): string {
             return (string) $ref;
         }, $responders->getValues()));
+
         self::assertInstanceOf(TestService::class, $container->get(TestService::class));
     }
 
@@ -61,6 +68,11 @@ final class ExtensionTest extends TestCase
 
         $container->register(TestResponder::class)
             ->setAutoconfigured(true)
+        ;
+        $container->register(TestDecoratingResponder::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setDecoratedService(Responder::class)
         ;
         $container->register(TestService::class)
             ->setAutowired(true)
@@ -85,6 +97,19 @@ final class ExtensionTest extends TestCase
 
 class TestResponder implements Responder
 {
+    public function respond(Respond $respond): Response
+    {
+        throw BadRespondTypeException::create($this, $respond);
+    }
+}
+
+class TestDecoratingResponder implements Responder
+{
+    public function __construct(Responder $responder)
+    {
+        $responder;
+    }
+
     public function respond(Respond $respond): Response
     {
         throw BadRespondTypeException::create($this, $respond);

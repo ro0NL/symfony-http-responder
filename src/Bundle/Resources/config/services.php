@@ -13,8 +13,8 @@ return function (ContainerConfigurator $container): void {
             ->private()
 
         // main responder
-        ->set('.http_responder.main', ChainResponder::class)
+        ->set('http_responder', ChainResponder::class)
             ->arg('$responders', tagged('http_responder'))
-        ->alias(Responder::class, '.http_responder.main')
+        ->alias(Responder::class, 'http_responder')
     ;
 };
