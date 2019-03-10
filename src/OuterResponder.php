@@ -31,6 +31,8 @@ final class OuterResponder implements Responder
 
     public function respond(Respond $respond): Response
     {
+        $response = $this->responder->respond($respond);
+
         if (null !== $this->flashBag) {
             foreach ($respond->flashes as $type => $messages) {
                 foreach ((array) $messages as $message) {
@@ -41,7 +43,6 @@ final class OuterResponder implements Responder
             throw new \LogicException(sprintf('Respond "%s" cannot have flashes because no flash bag is available.', \get_class($respond)));
         }
 
-        $response = $this->responder->respond($respond);
         $response->headers->add($respond->headers);
 
         [$statusCode, $statusText] = $respond->status;

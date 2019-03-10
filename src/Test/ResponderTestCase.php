@@ -11,6 +11,7 @@ use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
@@ -19,130 +20,152 @@ abstract class ResponderTestCase extends TestCase
 {
     protected const DEFAULT_RESPONSE_CLASS = Response::class;
     protected const DEFAULT_RESPONSE_STATUS = 200;
+    protected const IS_CATCH_ALL_RESPONDER = false;
 
-    public function testRespondWithStatus(): void
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
+    protected function tearDown(): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond->withStatus(1 + $prevStatus = $respond->status[0]));
+        $this->getFlashBag()->clear();
+    }
 
-            self::assertSame(1 + $prevStatus, $response->getStatusCode());
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithStatus(Respond $respond): void
+    {
+        $response = $this->doRespond($respond->withStatus(1 + $prevStatus = $respond->status[0]));
+
+        self::assertSame(1 + $prevStatus, $response->getStatusCode());
+    }
+
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithInvalidStatus(Respond $respond): void
+    {
+        $responder = $this->getOuterResponder();
+
+        try {
+            $responder->respond($respond->withStatus(999));
+            self::fail();
+        } catch (\LogicException $e) {
+            $this->addToAssertionCount(1);
         }
     }
 
-    public function testRespondWithInvalidStatus(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithStatusText(Respond $respond): void
     {
-        $responder = new OuterResponder($this->getResponder());
+        $response = $this->doRespond($respond->withStatus(201, 'Hello HTTP'));
 
-        foreach ($this->getResponds() as $respond) {
-            try {
-                $responder->respond($respond->withStatus(999));
-                self::fail();
-            } catch (\LogicException $e) {
-                $this->addToAssertionCount(1);
-            }
-        }
+        self::assertSame(201, $response->getStatusCode());
+        self::assertStringStartsWith("HTTP/1.0 201 Hello HTTP\r\n", (string) $response);
     }
 
-    public function testRespondWithStatusText(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithDate(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond->withStatus(201, 'Hello HTTP'));
+        $response = $this->doRespond($respond->withDate($date = new \DateTime('yesterday')));
 
-            self::assertSame(201, $response->getStatusCode());
-            self::assertStringStartsWith("HTTP/1.0 201 Hello HTTP\r\n", (string) $response);
-        }
+        self::assertInstanceOf(\DateTime::class, $response->getDate());
+        /** @psalm-suppress PossiblyNullReference */
+        self::assertSame($date->getTimestamp(), $response->getDate()->getTimestamp());
     }
 
-    public function testRespondWithDate(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithoutDate(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond->withDate($date = new \DateTime('yesterday')));
+        $response = $this->doRespond($respond);
 
-            self::assertInstanceOf(\DateTime::class, $response->getDate());
-            /** @psalm-suppress PossiblyNullReference */
-            self::assertSame($date->getTimestamp(), $response->getDate()->getTimestamp());
-        }
+        self::assertInstanceOf(\DateTime::class, $date = $response->getDate());
+        self::assertTrue($date > new \DateTime('yesterday'));
     }
 
-    public function testRespondWithoutDate(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithHeaders(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond);
+        $response = $this->doRespond($respond->withHeaders([
+            'h1' => 'v',
+            'H2' => ['v1', 'V2'],
+        ]));
+        $headers = $response->headers->allPreserveCase();
 
-            self::assertInstanceOf(\DateTime::class, $date = $response->getDate());
-            self::assertTrue($date > new \DateTime('yesterday'));
-        }
+        self::assertArrayHasKey('h1', $headers);
+        self::assertSame(['v'], $headers['h1']);
+        self::assertArrayHasKey('H2', $headers);
+        self::assertSame(['v1', 'V2'], $headers['H2']);
     }
 
-    public function testRespondWithHeaders(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithHeader(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond->withHeaders([
-                'h1' => 'v',
-                'H2' => ['v1', 'V2'],
-            ]));
-            $headers = $response->headers->allPreserveCase();
+        $response = $this->doRespond($respond
+            ->withHeader('h1', 'v')
+            ->withHeader('H2', 'ignored')
+            ->withHeader('H2', ['v1', 'V2']));
+        $headers = $response->headers->allPreserveCase();
 
-            self::assertArrayHasKey('h1', $headers);
-            self::assertSame(['v'], $headers['h1']);
-            self::assertArrayHasKey('H2', $headers);
-            self::assertSame(['v1', 'V2'], $headers['H2']);
-        }
+        self::assertArrayHasKey('h1', $headers);
+        self::assertSame(['v'], $headers['h1']);
+        self::assertArrayHasKey('H2', $headers);
+        self::assertSame(['v1', 'V2'], $headers['H2']);
     }
 
-    public function testRespondWithHeader(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithFlashes(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond
-                ->withHeader('h1', 'v')
-                ->withHeader('H2', 'ignored')
-                ->withHeader('H2', ['v1', 'V2']));
-            $headers = $response->headers->allPreserveCase();
+        $this->getOuterResponder()->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, []]]));
 
-            self::assertArrayHasKey('h1', $headers);
-            self::assertSame(['v'], $headers['h1']);
-            self::assertArrayHasKey('H2', $headers);
-            self::assertSame(['v1', 'V2'], $headers['H2']);
-        }
+        self::assertSame(['type1' => ['X'], 'TYPE2' => ['y', true, []]], $this->getFlashBag()->all());
     }
 
-    public function testRespondWithFlashes(): void
+    /**
+     * @dataProvider provideResponds
+     */
+    public function testRespondWithFlash(Respond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            $flashBag = new FlashBag();
+        $this->getOuterResponder()->respond($respond
+            ->withFlash('type1', 'X')
+            ->withFlash('TYPE2', 'not ignored')
+            ->withFlash('TYPE2', ['y', true, []]));
 
-            (new OuterResponder($this->getResponder(), $flashBag))->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, []]]));
-
-            self::assertSame(['type1' => ['X'], 'TYPE2' => ['y', true, []]], $flashBag->all());
-        }
+        self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, []]], $this->getFlashBag()->all());
     }
 
-    public function testRespondWithFlashesWithoutFlashBag(): void
-    {
-        $responder = new OuterResponder($this->getResponder());
-
-        $this->expectException(\LogicException::class);
-
-        $responder->respond($this->getMockForAbstractClass(Respond::class)->withFlashes(['unsupported']));
-    }
-
-    public function testRespondWithFlash(): void
+    public function provideResponds(): iterable
     {
         foreach ($this->getResponds() as $respond) {
-            $flashBag = new FlashBag();
-
-            (new OuterResponder($this->getResponder(), $flashBag))->respond($respond
-                ->withFlash('type1', 'X')
-                ->withFlash('TYPE2', 'not ignored')
-                ->withFlash('TYPE2', ['y', true, []]));
-
-            self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, []]], $flashBag->all());
+            yield [$respond];
         }
     }
 
     public function testUnknownRespond(): void
     {
         $responder = $this->getResponder();
+
+        if (static::IS_CATCH_ALL_RESPONDER) {
+            $responder->respond($this->getMockForAbstractClass(Respond::class));
+
+            $this->addToAssertionCount(1);
+
+            return;
+        }
 
         $this->expectException(BadRespondTypeException::class);
 
@@ -165,8 +188,30 @@ abstract class ResponderTestCase extends TestCase
      */
     abstract protected function getResponds(): iterable;
 
+    protected function getThrowingResponder(): Responder
+    {
+        return new class() implements Responder {
+            public function respond(Respond $respond): Response
+            {
+                throw BadRespondTypeException::create($this, $respond);
+            }
+        };
+    }
+
+    protected function getOuterResponder(): OuterResponder
+    {
+        $responder = $this->getResponder();
+
+        return $responder instanceof OuterResponder ? $responder : new OuterResponder($responder, $this->getFlashBag());
+    }
+
+    protected function getFlashBag(): FlashBagInterface
+    {
+        return $this->flashBag ?? ($this->flashBag = new FlashBag());
+    }
+
     protected function doRespond(Respond $respond): Response
     {
-        return (new OuterResponder($this->getResponder()))->respond($respond);
+        return $this->getOuterResponder()->respond($respond);
     }
 }
