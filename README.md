@@ -74,7 +74,7 @@ use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 
-class MyProvidingResponder implements Responder
+class MyDecoratingResponder implements Responder
 {
     private $responder;
 
