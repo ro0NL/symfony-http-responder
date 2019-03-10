@@ -90,15 +90,6 @@ abstract class ResponderTestCase extends TestCase
         $responder->respond($this->getMockForAbstractClass(Respond::class));
     }
 
-    public function testOuterUnknownRespond(): void
-    {
-        $responder = new OuterResponder($this->getResponder());
-
-        $this->expectException(BadRespondTypeException::class);
-
-        $responder->respond($this->getMockForAbstractClass(Respond::class));
-    }
-
     protected static function assertResponse(Response $response, int $status = null): void
     {
         if (Response::class !== static::DEFAULT_RESPONSE_CLASS) {

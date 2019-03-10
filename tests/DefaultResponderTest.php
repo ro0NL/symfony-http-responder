@@ -18,8 +18,7 @@ final class DefaultResponderTest extends ResponderTestCase
 {
     public function testRespondRaw(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Raw('"hello" & <world>™'));
+        $response = $this->doRespond(new Raw('"hello" & <world>™'));
 
         self::assertResponse($response);
         self::assertSame('"hello" & <world>™', $response->getContent());
@@ -27,8 +26,7 @@ final class DefaultResponderTest extends ResponderTestCase
 
     public function testRespondRedirect(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Redirect('/path'));
+        $response = $this->doRespond(new Redirect('/path'));
 
         self::assertResponse($response, 302);
         self::assertInstanceOf(RedirectResponse::class, $response);
@@ -37,17 +35,15 @@ final class DefaultResponderTest extends ResponderTestCase
 
     public function testRespondNoContent(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new NoContent());
+        $response = $this->doRespond(new NoContent());
 
-        //self::assertResponse($response, 204);
+        self::assertResponse($response, 204);
         self::assertSame('', $response->getContent());
     }
 
     public function testRespondStream(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Stream(function (): void {
+        $response = $this->doRespond(new Stream(function (): void {
             echo 'hello stream';
         }));
 
@@ -61,8 +57,7 @@ final class DefaultResponderTest extends ResponderTestCase
 
     public function testRespondStreamFromIterable(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(Stream::iterable(['hello', ' ', 'stream']));
+        $response = $this->doRespond(Stream::iterable(['hello', ' ', 'stream']));
 
         self::assertResponse($response);
         self::assertInstanceOf(StreamedResponse::class, $response);
