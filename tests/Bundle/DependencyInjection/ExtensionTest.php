@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Bundle\DependencyInjection\Extension;
 use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
+use ro0NL\HttpResponder\OuterResponder;
 use ro0NL\HttpResponder\ProvidingResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
@@ -25,22 +26,21 @@ final class ExtensionTest extends TestCase
     public function testExtension(): void
     {
         $container = $this->createContainer();
-        /** @var Definition $decorator */
+        /** @var Reference $decoratorRef */
         $decoratorRef = $container->getDefinition(TestService::class)->getArgument(0);
-
-        self::assertInstanceOf(Reference::class, $decoratorRef);
-        self::assertSame(TestDecoratingResponder::class, (string) $decoratorRef);
-
-        /** @var Definition $responder */
+        /** @var Definition $decorator */
         $decorator = $container->findDefinition((string) $decoratorRef);
+        /** @var Definition $outer */
+        $outer = $decorator->getArgument(0);
         /** @var Definition $responder */
-        $responder = $decorator->getArgument(0);
-
-        self::assertSame(ChainResponder::class, $responder->getClass());
-
+        $responder = $outer->getArgument(0);
         /** @var IteratorArgument $responders */
         $responders = $responder->getArgument(0);
 
+        self::assertInstanceOf(Reference::class, $decoratorRef);
+        self::assertSame(TestDecoratingResponder::class, $decorator->getClass());
+        self::assertSame(OuterResponder::class, $outer->getClass());
+        self::assertSame(ChainResponder::class, $responder->getClass());
         self::assertInstanceOf(IteratorArgument::class, $responders);
         self::assertSame([
             TestResponder::class,
