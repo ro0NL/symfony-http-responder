@@ -17,6 +17,11 @@ abstract class Respond
     public $status = [Response::HTTP_OK, null];
 
     /**
+     * @var \DateTimeInterface|null
+     */
+    public $date;
+
+    /**
      * @var string[]|string[][]
      */
     public $headers = [];
@@ -29,6 +34,13 @@ abstract class Respond
     public function withStatus(int $code, string $text = null): self
     {
         $this->status = [$code, $text];
+
+        return $this;
+    }
+
+    public function withDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

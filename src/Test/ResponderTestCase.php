@@ -53,6 +53,27 @@ abstract class ResponderTestCase extends TestCase
         }
     }
 
+    public function testRespondWithDate(): void
+    {
+        foreach ($this->getResponds() as $respond) {
+            $response = $this->doRespond($respond->withDate($date = new \DateTime('yesterday')));
+
+            self::assertInstanceOf(\DateTime::class, $response->getDate());
+            /** @psalm-suppress PossiblyNullReference */
+            self::assertSame($date->getTimestamp(), $response->getDate()->getTimestamp());
+        }
+    }
+
+    public function testRespondWithoutDate(): void
+    {
+        foreach ($this->getResponds() as $respond) {
+            $response = $this->doRespond($respond);
+
+            self::assertInstanceOf(\DateTime::class, $date = $response->getDate());
+            self::assertTrue($date > new \DateTime('yesterday'));
+        }
+    }
+
     public function testRespondWithHeaders(): void
     {
         foreach ($this->getResponds() as $respond) {

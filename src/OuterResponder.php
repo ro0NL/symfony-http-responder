@@ -42,10 +42,14 @@ final class OuterResponder implements Responder
         }
 
         $response = $this->responder->respond($respond);
+        $response->headers->add($respond->headers);
 
         [$statusCode, $statusText] = $respond->status;
         $response->setStatusCode($statusCode, $statusText);
-        $response->headers->add($respond->headers);
+
+        if (null !== $respond->date) {
+            $response->setDate($respond->date);
+        }
 
         return $response;
     }
