@@ -7,8 +7,6 @@
 controllers really.
 
 ```php
-<?php
-
 use ro0NL\HttpResponder\Bridge\Twig\Template;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +22,83 @@ class SomeHttpAction
 ```
 
 _We call it [Composition over Inheritance][wiki:compositioninheritance]._
+
+# Installation
+
+```bash
+composer require ro0nl/http-responder
+```
+
+## Enable the Symfony Bundle
+
+```php
+return [
+    // ...
+    ro0NL\HttpResponder\Bundle\HttpResponderBundle::class => ['all' => true],
+];
+```
+
+# Creating a Providing Responder
+
+```php
+use ro0NL\HttpResponder\ProvidingResponder;
+use ro0NL\HttpResponder\Respond\Respond;
+use Symfony\Component\HttpFoundation\Response;
+
+class MyRespond extends Respond
+{
+}
+
+class MyProvidingResponder extends ProvidingResponder
+{
+    protected function getProviders(): iterable
+    {
+        yield MyRespond::class => function (MyRespond $respond): Response {
+            return new Response('hello world');
+        };
+    }
+}
+```
+
+Any type of `ProvidingResponder` service is automatically tagged with `http_responder` to be made available in the main
+responder.
+
+In case your responder implements the `Responder` interface but serves as a provider it should be tagged manually.
+
+# Creating a Decorating Responder
+
+To add behaviors to the responder use a decorator.
+
+```php
+use ro0NL\HttpResponder\Responder;
+use ro0NL\HttpResponder\Respond\Respond;
+use Symfony\Component\HttpFoundation\Response;
+
+class MyProvidingResponder implements Responder
+{
+    private $responder;
+
+    public function __construct(Responder $responder)
+    {
+        $this->responder = $responder;
+    }
+
+    public function respond(Respond $respond): Response
+    {
+        $response = $this->responder->respond($respond);
+
+        // apply some generic behavior
+
+        if ($respond instanceof MyRespond) {
+            // apply some specific behavior
+        }
+
+        return $response;
+    }
+}
+```
+
+The bundle's main service identifier is `http_responder` and is aliased to its corresponding interface.
 
 # Contributing
 
