@@ -96,6 +96,15 @@ abstract class ResponderTestCase extends TestCase
         }
     }
 
+    public function testRespondWithFlashesWithoutFlashBag(): void
+    {
+        $responder = new OuterResponder($this->getResponder());
+
+        $this->expectException(\LogicException::class);
+
+        $responder->respond($this->getMockForAbstractClass(Respond::class)->withFlashes(['unsupported']));
+    }
+
     public function testRespondWithFlash(): void
     {
         foreach ($this->getResponds() as $respond) {
