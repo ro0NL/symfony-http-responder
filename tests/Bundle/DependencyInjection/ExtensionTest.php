@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Bundle\DependencyInjection\Extension;
 use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
+use ro0NL\HttpResponder\ProvidingResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
@@ -25,12 +26,16 @@ final class ExtensionTest extends TestCase
     {
         $container = $this->createContainer();
 
-        /** @var Definition $responder */
-        $decorator = $container->getDefinition(TestService::class)->getArgument(0);
-        self::assertSame(TestDecoratingResponder::class, $decorator->getClass());
+        /** @var Definition $decorator */
+        $decoratorRef = $container->getDefinition(TestService::class)->getArgument(0);
+        self::assertInstanceOf(Reference::class, $decoratorRef);
+        self::assertSame(TestDecoratingResponder::class, (string) $decoratorRef);
 
         /** @var Definition $responder */
+        $decorator = $container->findDefinition((string) $decoratorRef);
+        /** @var Definition $responder */
         $responder = $decorator->getArgument(0);
+
         self::assertSame(ChainResponder::class, $responder->getClass());
 
         /** @var IteratorArgument $responders */
@@ -38,6 +43,7 @@ final class ExtensionTest extends TestCase
         self::assertInstanceOf(IteratorArgument::class, $responders);
         self::assertSame([
             TestResponder::class,
+            TestProvidingResponder::class,
             '.http_responder.default',
             '.http_responder.file',
             '.http_responder.json',
@@ -67,12 +73,17 @@ final class ExtensionTest extends TestCase
         $container->prependExtensionConfig('http_responder', []);
 
         $container->register(TestResponder::class)
-            ->setAutoconfigured(true)
+            ->addTag('http_responder')
+        ;
+        $container->register(TestProvidingResponder::class)
+            ->addTag('http_responder')
         ;
         $container->register(TestDecoratingResponder::class)
+            ->setPublic(true)
             ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setDecoratedService(Responder::class)
+            ->setArgument('$responder', new Reference(TestDecoratingResponder::class.'.inner'))
         ;
         $container->register(TestService::class)
             ->setAutowired(true)
@@ -100,6 +111,14 @@ class TestResponder implements Responder
     public function respond(Respond $respond): Response
     {
         throw BadRespondTypeException::create($this, $respond);
+    }
+}
+
+class TestProvidingResponder extends ProvidingResponder
+{
+    protected function getProviders(): iterable
+    {
+        yield from [];
     }
 }
 

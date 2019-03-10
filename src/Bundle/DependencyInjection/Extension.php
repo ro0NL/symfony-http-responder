@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Bundle\DependencyInjection;
 
-use ro0NL\HttpResponder\Responder;
+use ro0NL\HttpResponder\ProvidingResponder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -30,7 +30,7 @@ final class Extension extends BaseExtension
         $loader->load('services.php');
         $loader->load('responders.php');
 
-        $container->registerForAutoconfiguration(Responder::class)
+        $container->registerForAutoconfiguration(ProvidingResponder::class)
             ->addTag('http_responder')
         ;
 

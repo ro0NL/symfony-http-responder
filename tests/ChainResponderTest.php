@@ -45,9 +45,6 @@ final class ChainResponderTest extends ResponderTestCase
     }
 }
 
-/**
- * @internal
- */
 final class TestChainedResponder implements Responder
 {
     public function respond(Respond $respond): Response
@@ -60,9 +57,6 @@ final class TestChainedResponder implements Responder
     }
 }
 
-/**
- * @internal
- */
 final class TestChainedResponderAggregate extends ProvidingResponder
 {
     protected function getProviders(): iterable
@@ -81,16 +75,10 @@ final class TestChainedResponderAggregate extends ProvidingResponder
     }
 }
 
-/**
- * @internal
- */
 final class TestRespondA extends Respond
 {
 }
 
-/**
- * @internal
- */
 final class TestRespondB extends Respond
 {
 }
