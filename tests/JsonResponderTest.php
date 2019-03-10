@@ -16,8 +16,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJson(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Json(['"hello" & <world>™']));
+        $response = $this->doRespond(new Json(['"hello" & <world>™']));
 
         self::assertResponse($response);
         self::assertSame('["\u0022hello\u0022 \u0026 \u003Cworld\u003E\u2122"]', $response->getContent());
@@ -26,8 +25,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonWithPrimitive(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Json('json'));
+        $response = $this->doRespond(new Json('json'));
 
         self::assertResponse($response);
         self::assertSame('"json"', $response->getContent());
@@ -36,8 +34,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonWithEncodingOptions(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Json(['"hello" & <world>™'], 0));
+        $response = $this->doRespond(new Json(['"hello" & <world>™'], 0));
 
         self::assertResponse($response);
         self::assertSame('["\"hello\" & <world>\u2122"]', $response->getContent());
@@ -46,8 +43,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonp(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond((new Json('js'))->withCallback('hello'));
+        $response = $this->doRespond((new Json('js'))->withCallback('hello'));
 
         self::assertResponse($response);
         self::assertSame('/**/hello("js");', $response->getContent());
@@ -56,8 +52,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonRaw(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(Json::raw('["\"hello\" & world™"]'));
+        $response = $this->doRespond(Json::raw('["\"hello\" & world™"]'));
 
         self::assertResponse($response);
         self::assertSame('["\"hello\" & world™"]', $response->getContent());
@@ -66,8 +61,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonRawWithEncodingOptions(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(Json::raw('["\"hello\" & world™"]', \JSON_HEX_AMP));
+        $response = $this->doRespond(Json::raw('["\"hello\" & world™"]', \JSON_HEX_AMP));
 
         self::assertResponse($response);
         self::assertSame('["\"hello\" \u0026 world\u2122"]', $response->getContent());
@@ -87,8 +81,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonRawFromBrokenString(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(Json::raw('{broken'));
+        $response = $this->doRespond(Json::raw('{broken'));
 
         self::assertResponse($response);
         self::assertSame('{broken', $response->getContent());
@@ -97,8 +90,7 @@ final class JsonResponderTest extends ResponderTestCase
 
     public function testRespondJsonRawFromBrokenStringWithEncodingOptions(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(Json::raw('{broken', 0));
+        $response = $this->doRespond(Json::raw('{broken', 0));
 
         self::assertResponse($response);
         self::assertSame('null', $response->getContent());

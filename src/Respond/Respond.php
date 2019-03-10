@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class Respond
 {
     /**
-     * @var int
+     * @var array
      */
-    public $status = Response::HTTP_OK;
+    public $status = [Response::HTTP_OK, null];
 
     /**
      * @var string[]|string[][]
@@ -22,13 +22,13 @@ abstract class Respond
     public $headers = [];
 
     /**
-     * @var string[]|string[][]
+     * @var array
      */
     public $flashes = [];
 
-    public function withStatus(int $status): self
+    public function withStatus(int $code, string $text = null): self
     {
-        $this->status = $status;
+        $this->status = [$code, $text];
 
         return $this;
     }
@@ -59,6 +59,16 @@ abstract class Respond
     public function withFlashes(array $flashes): self
     {
         $this->flashes = $flashes;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    public function withFlash(string $type, $message): self
+    {
+        $this->flashes[$type][] = $message;
 
         return $this;
     }

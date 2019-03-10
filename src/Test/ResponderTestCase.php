@@ -6,6 +6,7 @@ namespace ro0NL\HttpResponder\Test;
 
 use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
+use ro0NL\HttpResponder\OuterResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,8 @@ abstract class ResponderTestCase extends TestCase
 
     public function testRespondWithStatus(): void
     {
-        $responder = $this->getResponder();
-
         foreach ($this->getResponds() as $respond) {
-            $response = $responder->respond($respond->withStatus(1 + $prevStatus = $respond->status));
+            $response = $this->doRespond($respond->withStatus(1 + $prevStatus = $respond->status[0]));
 
             self::assertSame(1 + $prevStatus, $response->getStatusCode());
         }
@@ -31,7 +30,7 @@ abstract class ResponderTestCase extends TestCase
 
     public function testRespondWithInvalidStatus(): void
     {
-        $responder = $this->getResponder();
+        $responder = new OuterResponder($this->getResponder());
 
         foreach ($this->getResponds() as $respond) {
             try {
@@ -43,12 +42,20 @@ abstract class ResponderTestCase extends TestCase
         }
     }
 
+    public function testRespondWithStatusText(): void
+    {
+        foreach ($this->getResponds() as $respond) {
+            $response = $this->doRespond($respond->withStatus(201, 'Hello HTTP'));
+
+            self::assertSame(201, $response->getStatusCode());
+            self::assertStringStartsWith("HTTP/1.0 201 Hello HTTP\r\n", (string) $response);
+        }
+    }
+
     public function testRespondWithHeaders(): void
     {
-        $responder = $this->getResponder();
-
         foreach ($this->getResponds() as $respond) {
-            $response = $responder->respond($respond->withHeaders([
+            $response = $this->doRespond($respond->withHeaders([
                 'h1' => 'v',
                 'H2' => ['v1', 'V2'],
             ]));
@@ -63,10 +70,8 @@ abstract class ResponderTestCase extends TestCase
 
     public function testRespondWithHeader(): void
     {
-        $responder = $this->getResponder();
-
         foreach ($this->getResponds() as $respond) {
-            $response = $responder->respond($respond->withHeader('h1', 'v')->withHeader('H2', ['v1', 'V2']));
+            $response = $this->doRespond($respond->withHeader('h1', 'v')->withHeader('H2', ['v1', 'V2']));
             $headers = $response->headers->allPreserveCase();
 
             self::assertArrayHasKey('h1', $headers);
@@ -79,6 +84,15 @@ abstract class ResponderTestCase extends TestCase
     public function testUnknownRespond(): void
     {
         $responder = $this->getResponder();
+
+        $this->expectException(BadRespondTypeException::class);
+
+        $responder->respond($this->getMockForAbstractClass(Respond::class));
+    }
+
+    public function testOuterUnknownRespond(): void
+    {
+        $responder = new OuterResponder($this->getResponder());
 
         $this->expectException(BadRespondTypeException::class);
 
@@ -100,4 +114,9 @@ abstract class ResponderTestCase extends TestCase
      * @return iterable|Respond[]
      */
     abstract protected function getResponds(): iterable;
+
+    protected function doRespond(Respond $respond): Response
+    {
+        return (new OuterResponder($this->getResponder()))->respond($respond);
+    }
 }

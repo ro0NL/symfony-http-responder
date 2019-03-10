@@ -26,7 +26,7 @@ final class TwigResponder extends ProvidingResponder
     protected function getProviders(): iterable
     {
         yield Template::class => function (Template $respond): Response {
-            return new Response($this->twig->render($respond->name, $respond->context), $respond->status, $respond->headers);
+            return new Response($this->twig->render($respond->name, $respond->context));
         };
     }
 }

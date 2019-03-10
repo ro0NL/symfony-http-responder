@@ -18,7 +18,7 @@ final class Redirect extends Respond
 
     public function __construct(string $url)
     {
-        $this->status = Response::HTTP_FOUND;
         $this->url = $url;
+        $this->status[0] = Response::HTTP_FOUND;
     }
 }

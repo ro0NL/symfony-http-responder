@@ -30,9 +30,9 @@ final class RouteRedirect extends Respond
 
     public function __construct(string $name, array $parameters = [])
     {
-        $this->status = Response::HTTP_FOUND;
         $this->name = $name;
         $this->parameters = $parameters;
+        $this->status[0] = Response::HTTP_FOUND;
     }
 
     public function withAbsoluteUrl(): self

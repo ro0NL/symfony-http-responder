@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class NoContent extends Respond
 {
-    /**
-     * @var int
-     */
-    public $status = Response::HTTP_NO_CONTENT;
+    public function __construct()
+    {
+        $this->status[0] = Response::HTTP_NO_CONTENT;
+    }
 }

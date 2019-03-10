@@ -16,16 +16,14 @@ final class ChainResponderTest extends ResponderTestCase
 {
     public function testRespond(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new TestRespondA());
+        $response = $this->doRespond(new TestRespondA());
 
         self::assertSame('A', $response->getContent());
     }
 
     public function testRespondFromAggregate(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new TestRespondB());
+        $response = $this->doRespond(new TestRespondB());
 
         self::assertSame('B', $response->getContent());
     }
@@ -50,7 +48,7 @@ final class TestChainedResponder implements Responder
     public function respond(Respond $respond): Response
     {
         if ($respond instanceof TestRespondA) {
-            return new Response('A', $respond->status, $respond->headers);
+            return new Response('A');
         }
 
         throw BadRespondTypeException::create($this, $respond);
@@ -66,7 +64,7 @@ final class TestChainedResponderAggregate extends ProvidingResponder
         };
 
         yield TestRespondB::class => function (TestRespondB $respond): Response {
-            return new Response('B', $respond->status, $respond->headers);
+            return new Response('B');
         };
 
         yield TestRespondB::class => function (TestRespondB $respond): Response {

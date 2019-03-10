@@ -12,7 +12,3 @@ parameters:
         - tests
         - var/phpunit/phpunit-7.5/src
     tmpDir: var/phpstan
-    ignoreErrors:
-        -
-            message: '#Method .+\\.+ResponderTest::doRespond\(\) should return Symfony\\Component\\HttpFoundation\\.+Response but returns Symfony\\Component\\HttpFoundation\\Response\.#'
-            path: tests/

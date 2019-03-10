@@ -20,19 +20,19 @@ final class DefaultResponder extends ProvidingResponder
     protected function getProviders(): iterable
     {
         yield Raw::class => function (Raw $respond): Response {
-            return new Response($respond->contents, $respond->status, $respond->headers);
+            return new Response($respond->contents);
         };
 
         yield Redirect::class => function (Redirect $respond): Response {
-            return new RedirectResponse($respond->url, $respond->status, $respond->headers);
+            return new RedirectResponse($respond->url);
         };
 
         yield NoContent::class => function (NoContent $respond): Response {
-            return new Response('', $respond->status, $respond->headers);
+            return new Response('');
         };
 
         yield Stream::class => function (Stream $respond): Response {
-            return new StreamedResponse($respond->callback, $respond->status, $respond->headers);
+            return new StreamedResponse($respond->callback);
         };
     }
 }

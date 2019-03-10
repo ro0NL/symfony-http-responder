@@ -26,7 +26,7 @@ final class RouterResponder extends ProvidingResponder
     protected function getProviders(): iterable
     {
         yield RouteRedirect::class => function (RouteRedirect $respond): RedirectResponse {
-            return new RedirectResponse($this->urlGenerator->generate($respond->name, $respond->parameters, $respond->referenceType), $respond->status, $respond->headers);
+            return new RedirectResponse($this->urlGenerator->generate($respond->name, $respond->parameters, $respond->referenceType));
         };
     }
 }

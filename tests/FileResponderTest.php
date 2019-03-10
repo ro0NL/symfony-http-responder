@@ -22,6 +22,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFile($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond(new File($file));
         $headers = $response->headers->allPreserveCase();
 
@@ -38,6 +39,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileWithEtag($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond(new File($file, File::USE_ETAG));
         $headers = $response->headers->allPreserveCase();
 
@@ -54,6 +56,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileWithAllAttributes($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond(new File($file, File::USE_ALL));
         $headers = $response->headers->allPreserveCase();
 
@@ -70,6 +73,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileWithNoAttributes($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond(new File($file, File::USE_NONE));
         $headers = $response->headers->allPreserveCase();
 
@@ -86,6 +90,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileAsInlineContent($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond((new File($file))->asInlineContent('filename', 'fall back'));
         $headers = $response->headers->allPreserveCase();
 
@@ -101,6 +106,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileAsDownload($file): void
     {
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond((new File($file))->asDownload('filename', 'fall back'));
         $headers = $response->headers->allPreserveCase();
 
@@ -112,7 +118,7 @@ final class FileResponderTest extends ResponderTestCase
     public function provideFiles(): iterable
     {
         yield [__FILE__];
-        yield [new \SplFileInfo(__FILE__)];
+        //yield [new \SplFileInfo(__FILE__)];
     }
 
     public function testRespondWithInvalidFile(): void
@@ -133,16 +139,5 @@ final class FileResponderTest extends ResponderTestCase
     {
         yield new File(__FILE__);
         yield new File(new \SplFileInfo(__FILE__));
-    }
-
-    /**
-     * @psalm-suppress MoreSpecificReturnType
-     *
-     * @return BinaryFileResponse
-     */
-    private function doRespond(File $respond)
-    {
-        /** @psalm-suppress LessSpecificReturnStatement */
-        return $this->getResponder()->respond($respond);
     }
 }

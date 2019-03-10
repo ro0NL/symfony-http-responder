@@ -16,8 +16,7 @@ final class TwigResponderTest extends ResponderTestCase
 {
     public function testRespond(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new Template('default'));
+        $response = $this->doRespond(new Template('default'));
 
         self::assertResponse($response);
         self::assertSame('hello twig', $response->getContent());

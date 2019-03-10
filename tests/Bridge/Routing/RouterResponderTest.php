@@ -18,8 +18,7 @@ final class RouterResponderTest extends ResponderTestCase
 
     public function testRespond(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new RouteRedirect('name'));
+        $response = $this->doRespond(new RouteRedirect('name'));
 
         self::assertResponse($response);
         self::assertSame('name/1/[]', $response->headers->get('location'));
@@ -27,8 +26,7 @@ final class RouterResponderTest extends ResponderTestCase
 
     public function testRespondWithParameters(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond(new RouteRedirect('name', ['key' => 'value']));
+        $response = $this->doRespond(new RouteRedirect('name', ['key' => 'value']));
 
         self::assertResponse($response);
         self::assertSame('name/1/{"key":"value"}', $response->headers->get('location'));
@@ -36,8 +34,7 @@ final class RouterResponderTest extends ResponderTestCase
 
     public function testRespondWithAbsoluteUrl(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond((new RouteRedirect('name'))->withAbsoluteUrl());
+        $response = $this->doRespond((new RouteRedirect('name'))->withAbsoluteUrl());
 
         self::assertResponse($response);
         self::assertSame('name/0/[]', $response->headers->get('location'));
@@ -45,8 +42,7 @@ final class RouterResponderTest extends ResponderTestCase
 
     public function testRespondWithRelativePath(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond((new RouteRedirect('name'))->withRelativePath());
+        $response = $this->doRespond((new RouteRedirect('name'))->withRelativePath());
 
         self::assertResponse($response);
         self::assertSame('name/2/[]', $response->headers->get('location'));
@@ -54,8 +50,7 @@ final class RouterResponderTest extends ResponderTestCase
 
     public function testRespondWithNetworkPath(): void
     {
-        $responder = $this->getResponder();
-        $response = $responder->respond((new RouteRedirect('name'))->withNetworkPath());
+        $response = $this->doRespond((new RouteRedirect('name'))->withNetworkPath());
 
         self::assertResponse($response);
         self::assertSame('name/3/[]', $response->headers->get('location'));

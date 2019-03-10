@@ -15,11 +15,15 @@ final class JsonResponder extends ProvidingResponder
     protected function getProviders(): iterable
     {
         yield Json::class => function (Json $respond): JsonResponse {
-            if ($respond->raw && !\is_string($respond->data)) {
-                throw new \LogicException(sprintf('JSON must be a string, got "%s".', \gettype($respond->data)));
-            }
+            if ($respond->raw) {
+                if (!\is_string($respond->data)) {
+                    throw new \LogicException(sprintf('JSON must be a string, got "%s".', \gettype($respond->data)));
+                }
 
-            $response = new JsonResponse($respond->data, $respond->status, $respond->headers, $respond->raw);
+                $response = JsonResponse::fromJsonString($respond->data);
+            } else {
+                $response = new JsonResponse($respond->data);
+            }
 
             if (null !== $respond->encodingOptions) {
                 $response->setEncodingOptions($respond->encodingOptions);
