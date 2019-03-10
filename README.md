@@ -67,7 +67,7 @@ In case your responder implements the `Responder` interface but serves as a prov
 
 # Creating a Decorating Responder
 
-To add behaviors to the responder use a decorator.
+To add behaviors to the main responder use a decorator.
 
 ```php
 use ro0NL\HttpResponder\Responder;
@@ -85,6 +85,12 @@ class MyDecoratingResponder implements Responder
 
     public function respond(Respond $respond): Response
     {
+        // provide a response and ignore/override default behaviors
+        if ($respond instanceof SpecialRespond) {
+            return new Response('special');
+        }
+
+        // provide the initial response with default behaviors
         $response = $this->responder->respond($respond);
 
         // apply some generic behavior
