@@ -53,9 +53,6 @@ abstract class Respond
         return $this;
     }
 
-    /**
-     * @param string[]|string[][] $flashes
-     */
     public function withFlashes(array $flashes): self
     {
         $this->flashes = $flashes;
@@ -68,7 +65,11 @@ abstract class Respond
      */
     public function withFlash(string $type, $message): self
     {
-        $this->flashes[$type][] = $message;
+        if (\is_array($message)) {
+            $this->flashes[$type] = array_merge($this->flashes[$type] ?? [], $message);
+        } else {
+            $this->flashes[$type][] = $message;
+        }
 
         return $this;
     }

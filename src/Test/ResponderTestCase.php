@@ -10,6 +10,7 @@ use ro0NL\HttpResponder\OuterResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
@@ -71,13 +72,41 @@ abstract class ResponderTestCase extends TestCase
     public function testRespondWithHeader(): void
     {
         foreach ($this->getResponds() as $respond) {
-            $response = $this->doRespond($respond->withHeader('h1', 'v')->withHeader('H2', ['v1', 'V2']));
+            $response = $this->doRespond($respond
+                ->withHeader('h1', 'v')
+                ->withHeader('H2', 'ignored')
+                ->withHeader('H2', ['v1', 'V2']));
             $headers = $response->headers->allPreserveCase();
 
             self::assertArrayHasKey('h1', $headers);
             self::assertSame(['v'], $headers['h1']);
             self::assertArrayHasKey('H2', $headers);
             self::assertSame(['v1', 'V2'], $headers['H2']);
+        }
+    }
+
+    public function testRespondWithFlashes(): void
+    {
+        foreach ($this->getResponds() as $respond) {
+            $flashBag = new FlashBag();
+
+            (new OuterResponder($this->getResponder(), $flashBag))->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, []]]));
+
+            self::assertSame(['type1' => ['X'], 'TYPE2' => ['y', true, []]], $flashBag->all());
+        }
+    }
+
+    public function testRespondWithFlash(): void
+    {
+        foreach ($this->getResponds() as $respond) {
+            $flashBag = new FlashBag();
+
+            (new OuterResponder($this->getResponder(), $flashBag))->respond($respond
+                ->withFlash('type1', 'X')
+                ->withFlash('TYPE2', 'not ignored')
+                ->withFlash('TYPE2', ['y', true, []]));
+
+            self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, []]], $flashBag->all());
         }
     }
 
