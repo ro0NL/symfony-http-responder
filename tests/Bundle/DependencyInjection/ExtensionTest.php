@@ -25,9 +25,9 @@ final class ExtensionTest extends TestCase
     public function testExtension(): void
     {
         $container = $this->createContainer();
-
         /** @var Definition $decorator */
         $decoratorRef = $container->getDefinition(TestService::class)->getArgument(0);
+
         self::assertInstanceOf(Reference::class, $decoratorRef);
         self::assertSame(TestDecoratingResponder::class, (string) $decoratorRef);
 
@@ -40,6 +40,7 @@ final class ExtensionTest extends TestCase
 
         /** @var IteratorArgument $responders */
         $responders = $responder->getArgument(0);
+
         self::assertInstanceOf(IteratorArgument::class, $responders);
         self::assertSame([
             TestResponder::class,
@@ -52,7 +53,6 @@ final class ExtensionTest extends TestCase
         ], array_map(function (Reference $ref): string {
             return (string) $ref;
         }, $responders->getValues()));
-
         self::assertInstanceOf(TestService::class, $container->get(TestService::class));
     }
 
@@ -73,10 +73,11 @@ final class ExtensionTest extends TestCase
         $container->prependExtensionConfig('http_responder', []);
 
         $container->register(TestResponder::class)
+            ->setAutoconfigured(true)
             ->addTag('http_responder')
         ;
         $container->register(TestProvidingResponder::class)
-            ->addTag('http_responder')
+            ->setAutoconfigured(true)
         ;
         $container->register(TestDecoratingResponder::class)
             ->setPublic(true)
