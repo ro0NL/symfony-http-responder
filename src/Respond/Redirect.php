@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class Redirect extends Respond
+final class Redirect extends AbstractRespond
 {
     /**
      * @var string

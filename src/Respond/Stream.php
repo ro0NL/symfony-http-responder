@@ -7,7 +7,7 @@ namespace ro0NL\HttpResponder\Respond;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class Stream extends Respond
+final class Stream extends AbstractRespond
 {
     /**
      * @var callable

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-final class NoContent extends Respond
+final class NoContent extends AbstractRespond
 {
     public function __construct()
     {

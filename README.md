@@ -45,7 +45,7 @@ use ro0NL\HttpResponder\ProvidingResponder;
 use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 
-class MyRespond extends Respond
+class MyRespond implements Respond
 {
 }
 

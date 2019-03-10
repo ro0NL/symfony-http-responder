@@ -7,7 +7,7 @@ namespace ro0NL\HttpResponder\Respond;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class Raw extends Respond
+final class Raw extends AbstractRespond
 {
     /**
      * @var string

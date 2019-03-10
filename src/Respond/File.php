@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class File extends Respond
+final class File extends AbstractRespond
 {
     public const USE_NONE = 0;
     public const USE_ALL = self::USE_ETAG | self::USE_MODIFICATION_DATE;

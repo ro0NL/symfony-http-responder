@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Bridge\Routing;
 
-use ro0NL\HttpResponder\Respond\Respond;
+use ro0NL\HttpResponder\Respond\AbstractRespond;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @author Roland Franssen <franssen.roland@gmail.com>
  */
-final class RouteRedirect extends Respond
+final class RouteRedirect extends AbstractRespond
 {
     /**
      * @var string

@@ -7,6 +7,7 @@ namespace ro0NL\HttpResponder\Tests;
 use ro0NL\HttpResponder\ChainResponder;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use ro0NL\HttpResponder\ProvidingResponder;
+use ro0NL\HttpResponder\Respond\AbstractRespond;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
@@ -73,10 +74,10 @@ final class TestChainedResponderAggregate extends ProvidingResponder
     }
 }
 
-final class TestRespondA extends Respond
+final class TestRespondA implements Respond
 {
 }
 
-final class TestRespondB extends Respond
+final class TestRespondB extends AbstractRespond
 {
 }

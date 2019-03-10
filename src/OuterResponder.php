@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder;
 
+use ro0NL\HttpResponder\Respond\AbstractRespond;
 use ro0NL\HttpResponder\Respond\Respond;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -32,6 +33,10 @@ final class OuterResponder implements Responder
     public function respond(Respond $respond): Response
     {
         $response = $this->responder->respond($respond);
+
+        if (!$respond instanceof AbstractRespond) {
+            return $response;
+        }
 
         if (null !== $this->flashBag) {
             foreach ($respond->flashes as $type => $messages) {

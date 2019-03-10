@@ -7,6 +7,7 @@ namespace ro0NL\HttpResponder\Test;
 use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use ro0NL\HttpResponder\OuterResponder;
+use ro0NL\HttpResponder\Respond\AbstractRespond;
 use ro0NL\HttpResponder\Respond\Respond;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,9 +34,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithStatus(Respond $respond): void
+    public function testRespondWithStatus(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond->withStatus(1 + $prevStatus = $respond->status[0]));
 
@@ -43,9 +44,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithInvalidStatus(Respond $respond): void
+    public function testRespondWithInvalidStatus(AbstractRespond $respond): void
     {
         $responder = $this->getOuterResponder();
 
@@ -58,9 +59,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithStatusText(Respond $respond): void
+    public function testRespondWithStatusText(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond->withStatus(201, 'Hello HTTP'));
 
@@ -69,9 +70,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithDate(Respond $respond): void
+    public function testRespondWithDate(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond->withDate($date = new \DateTime('yesterday')));
 
@@ -81,9 +82,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithoutDate(Respond $respond): void
+    public function testRespondWithoutDate(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond);
 
@@ -92,9 +93,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithHeaders(Respond $respond): void
+    public function testRespondWithHeaders(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond->withHeaders([
             'h1' => 'v',
@@ -109,9 +110,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithHeader(Respond $respond): void
+    public function testRespondWithHeader(AbstractRespond $respond): void
     {
         $response = $this->doRespond($respond
             ->withHeader('h1', 'v')
@@ -126,9 +127,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithFlashes(Respond $respond): void
+    public function testRespondWithFlashes(AbstractRespond $respond): void
     {
         $this->getOuterResponder()->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, []]]));
 
@@ -136,9 +137,9 @@ abstract class ResponderTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideResponds
+     * @dataProvider provideAbstractResponds
      */
-    public function testRespondWithFlash(Respond $respond): void
+    public function testRespondWithFlash(AbstractRespond $respond): void
     {
         $this->getOuterResponder()->respond($respond
             ->withFlash('type1', 'X')
@@ -155,12 +156,21 @@ abstract class ResponderTestCase extends TestCase
         }
     }
 
+    public function provideAbstractResponds(): iterable
+    {
+        foreach ($this->getResponds() as $respond) {
+            if ($respond instanceof AbstractRespond) {
+                yield [$respond];
+            }
+        }
+    }
+
     public function testUnknownRespond(): void
     {
         $responder = $this->getResponder();
 
         if (static::IS_CATCH_ALL_RESPONDER) {
-            $responder->respond($this->getMockForAbstractClass(Respond::class));
+            $responder->respond($this->createMock(Respond::class));
 
             $this->addToAssertionCount(1);
 
@@ -169,7 +179,7 @@ abstract class ResponderTestCase extends TestCase
 
         $this->expectException(BadRespondTypeException::class);
 
-        $responder->respond($this->getMockForAbstractClass(Respond::class));
+        $responder->respond($this->createMock(Respond::class));
     }
 
     protected static function assertResponse(Response $response, int $status = null): void
