@@ -35,10 +35,10 @@ phpunit-coverage:
 # code style / static analysis
 cs:
 	mkdir -p var
-	${qa} php-cs-fixer fix --dry-run --verbose --diff --config=.php_cs.dist src/ tests/
+	${qa} php-cs-fixer fix --dry-run --verbose --diff --config=.php_cs src/ tests/
 cs-fix:
 	mkdir -p var
-	${qa} php-cs-fixer fix --config=.php_cs.dist src/ tests/
+	${qa} php-cs-fixer fix --config=.php_cs src/ tests/
 sa: install phpunit-install
 	${qa} phpstan analyse
 	${qa} psalm --show-info=false
