@@ -52,3 +52,9 @@ shell:
 composer-normalize: install
 	${qa} composer global require ${composer_args} localheinz/composer-normalize
 	${qa} composer normalize
+
+# starter-kit
+starter-kit-init:
+	git remote add --fetch starter-kit git@github.com:ro0NL/php-package-starter-kit.git
+starter-kit-merge:
+	git merge --no-commit --no-ff --allow-unrelated-histories starter-kit/master
