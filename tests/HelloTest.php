@@ -11,8 +11,6 @@ final class HelloTest extends TestCase
 {
     public function testHello(): void
     {
-        $hello = new Hello();
-
-        self::assertSame('Hello PHP', $hello('PHP'));
+        self::assertSame('Hello PHP', (new Hello())('PHP'));
     }
 }
