@@ -132,7 +132,7 @@ The bundle's main service identifier is `http_responder` and is aliased to its c
 `getUser()` | ✔️ | ❌ (use `Security` service)
 `isCsrfTokenValid()` | ✔️ | ❌ (use `Csrf` service)
 `dispatchMessage()` | ✔️ | ❌ (use `Messenger` service)
-`addLink()` | ✔️ | ✔ (todo)
+`addLink()` | ✔️ | ✔
 
 # Contributing
 

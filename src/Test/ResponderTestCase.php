@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Test;
 
+use Fig\Link\Link;
 use PHPUnit\Framework\TestCase;
 use ro0NL\HttpResponder\Exception\BadRespondTypeException;
 use ro0NL\HttpResponder\OuterResponder;
@@ -149,23 +150,26 @@ abstract class ResponderTestCase extends TestCase
         self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, []]], $this->getFlashBag()->all());
     }
 
-    public function provideResponds(): iterable
+    /**
+     * @dataProvider provideAbstractResponds
+     */
+    public function testRespondWithLink(AbstractRespond $respond): void
     {
-        foreach ($this->getResponds() as $respond) {
-            yield [$respond];
+        if (!class_exists(Link::class)) {
+            self::markTestSkipped('Missing "fig/link-util".');
         }
+
+        $response = $this->getOuterResponder()->respond($respond
+            ->withHeader('link', 'custom')
+            ->withLink('href')
+            ->withLink('href{templated}')
+            ->withLink('href2', ['rel', 'rel2'])
+            ->withLink('href3', ['rel'], ['a' => true, 'b', 'c' => 'foo bar', 'd' => false, 'e' => 'boo']));
+
+        self::assertSame(['custom', '<href>; rel="", <href2>; rel="rel rel2", <href3>; rel="rel"; a; b; c="foo bar"; e="boo"'], $response->headers->get('link', null, false));
     }
 
-    public function provideAbstractResponds(): iterable
-    {
-        foreach ($this->getResponds() as $respond) {
-            if ($respond instanceof AbstractRespond) {
-                yield [$respond];
-            }
-        }
-    }
-
-    public function testUnknownRespond(): void
+    public function testRespondUnknown(): void
     {
         $responder = $this->getResponder();
 
@@ -180,6 +184,22 @@ abstract class ResponderTestCase extends TestCase
         $this->expectException(BadRespondTypeException::class);
 
         $responder->respond($this->createMock(Respond::class));
+    }
+
+    public function provideResponds(): iterable
+    {
+        foreach ($this->getResponds() as $respond) {
+            yield [$respond];
+        }
+    }
+
+    public function provideAbstractResponds(): iterable
+    {
+        foreach ($this->getResponds() as $respond) {
+            if ($respond instanceof AbstractRespond) {
+                yield [$respond];
+            }
+        }
     }
 
     protected static function assertResponse(Response $response, int $status = null): void

@@ -57,6 +57,27 @@ final class OuterResponder implements Responder
             $response->setDate($respond->date);
         }
 
+        if (null !== $respond->linkProvider) {
+            $links = [];
+            foreach ($respond->linkProvider->getLinks() as $link) {
+                if ($link->isTemplated()) {
+                    continue;
+                }
+                $attributes = ['', sprintf('rel="%s"', implode(' ', $link->getRels()))];
+                foreach ($link->getAttributes() as $attribute => $value) {
+                    if ($attribute === $value || \is_int($attribute)) {
+                        $attributes[] = $value;
+                    } else {
+                        $attributes[] = sprintf('%s="%s"', $attribute, $value);
+                    }
+                }
+                $links[] = sprintf('<%s>%s', $link->getHref(), implode('; ', $attributes));
+            }
+            if ($links) {
+                $response->headers->set('link', implode(', ', $links), false);
+            }
+        }
+
         return $response;
     }
 }

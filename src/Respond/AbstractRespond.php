@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ro0NL\HttpResponder\Respond;
 
+use Fig\Link\GenericLinkProvider;
+use Fig\Link\Link;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -32,6 +34,11 @@ abstract class AbstractRespond implements Respond
      * @var array
      */
     public $flashes = [];
+
+    /**
+     * @var GenericLinkProvider|null
+     */
+    public $linkProvider;
 
     public function withStatus(int $code, string $text = null): self
     {
@@ -83,6 +90,36 @@ abstract class AbstractRespond implements Respond
             $this->flashes[$type] = array_merge($this->flashes[$type] ?? [], $message);
         } else {
             $this->flashes[$type][] = $message;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string[]        $rels
+     * @param (string|bool)[] $attributes
+     */
+    public function withLink(string $href, array $rels = [], array $attributes = []): self
+    {
+        if (!class_exists(Link::class)) {
+            throw new \LogicException(sprintf('Respond "%s" cannot have links because no link provider is available. Try running "composer require fig/link-util".', \get_class($this)));
+        }
+
+        $link = new Link(array_shift($rels) ?? '', $href);
+        foreach ($rels as $rel) {
+            $link = $link->withRel($rel);
+        }
+        foreach ($attributes as $attribute => $value) {
+            if (false === $value) {
+                continue;
+            }
+            $link = $link->withAttribute($attribute, true === $value ? (string) $attribute : $value);
+        }
+
+        if (null === $this->linkProvider) {
+            $this->linkProvider = new GenericLinkProvider([$link]);
+        } else {
+            $this->linkProvider = $this->linkProvider->withLink($link);
         }
 
         return $this;
