@@ -123,7 +123,7 @@ The bundle's main service identifier is `http_responder` and is aliased to its c
 `denyAccessUnlessGranted()` | ✔️ | ❌ (use code / `Security` firewall)
 `renderView()` | ✔️ | ❌ (use `Twig` service)
 `render()` | ✔️ | ✔
-`stream()` | ✔️ | ✔ (todo `Twig` support)
+`stream()` | ✔️ | ✔
 `createNotFoundException()` | ✔️ | ❌ (use `throw`)
 `createAccessDeniedException()` | ✔️ | ❌ (use `throw`)
 `createForm()` | ✔️ | ❌ (use `Form` service)

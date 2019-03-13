@@ -21,9 +21,21 @@ final class Template extends AbstractRespond
      */
     public $context;
 
+    /**
+     * @var bool
+     */
+    public $stream = false;
+
     public function __construct(string $name, array $context = [])
     {
         $this->name = $name;
         $this->context = $context;
+    }
+
+    public function stream(): self
+    {
+        $this->stream = true;
+
+        return $this;
     }
 }

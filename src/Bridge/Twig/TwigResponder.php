@@ -6,6 +6,7 @@ namespace ro0NL\HttpResponder\Bridge\Twig;
 
 use ro0NL\HttpResponder\ProvidingResponder;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Environment;
 
 /**
@@ -26,6 +27,12 @@ final class TwigResponder extends ProvidingResponder
     protected function getProviders(): iterable
     {
         yield Template::class => function (Template $respond): Response {
+            if ($respond->stream) {
+                return new StreamedResponse(function () use ($respond): void {
+                    $this->twig->display($respond->name, $respond->context);
+                });
+            }
+
             return new Response($this->twig->render($respond->name, $respond->context));
         };
     }
