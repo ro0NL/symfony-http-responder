@@ -43,6 +43,7 @@ $rules = [
     'phpdoc_order' => true,
     'phpdoc_to_comment' => false,
     'phpdoc_trim_consecutive_blank_line_separation' => true,
+    'static_lambda' => true,
     'string_line_ending' => true,
 ];
 
