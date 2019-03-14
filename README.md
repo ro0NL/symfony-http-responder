@@ -112,18 +112,18 @@ The bundle's main service identifier is `http_responder` and is aliased to its c
 --- | --- | ---
 `get()` | ✔️ | ❌ (use DI)
 `has()` | ✔️ | ❌ (use DI)
-`generateUrl()` | ✔️ | ✔
-`forward()` | ✔️ | ✔ (todo)
-`redirect()` | ✔️ | ✔
-`redirectToRoute()` | ✔️ | ✔
-`json()` | ✔️ | ✔ (todo `Serializer` support)
-`file()` | ✔️ | ✔
-`addFlash()` | ✔️ | ✔
+`generateUrl()` | ✔️ | ✔️
+`forward()` | ✔️ | ✔️ (todo)
+`redirect()` | ✔️ | ✔️
+`redirectToRoute()` | ✔️ | ✔️
+`json()` | ✔️ | ✔️ (todo `Serializer` support)
+`file()` | ✔️ | ✔️
+`addFlash()` | ✔️ | ✔️
 `isGranted()` | ✔️ | ❌ (use `Security` service)
 `denyAccessUnlessGranted()` | ✔️ | ❌ (use code / `Security` firewall)
 `renderView()` | ✔️ | ❌ (use `Twig` service)
-`render()` | ✔️ | ✔
-`stream()` | ✔️ | ✔
+`render()` | ✔️ | ✔️
+`stream()` | ✔️ | ✔️
 `createNotFoundException()` | ✔️ | ❌ (use `throw`)
 `createAccessDeniedException()` | ✔️ | ❌ (use `throw`)
 `createForm()` | ✔️ | ❌ (use `Form` service)
@@ -132,7 +132,7 @@ The bundle's main service identifier is `http_responder` and is aliased to its c
 `getUser()` | ✔️ | ❌ (use `Security` service)
 `isCsrfTokenValid()` | ✔️ | ❌ (use `Csrf` service)
 `dispatchMessage()` | ✔️ | ❌ (use `Messenger` service)
-`addLink()` | ✔️ | ✔
+`addLink()` | ✔️ | ✔️
 
 # Contributing
 
