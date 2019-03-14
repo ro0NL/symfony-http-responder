@@ -50,7 +50,7 @@ final class ExtensionTest extends TestCase
             '.http_responder.json',
             '.http_responder.twig',
             '.http_responder.routing',
-        ], array_map(function (Reference $ref): string {
+        ], array_map(static function (Reference $ref): string {
             return (string) $ref;
         }, $responders->getValues()));
         self::assertInstanceOf(TestService::class, $container->get(TestService::class));

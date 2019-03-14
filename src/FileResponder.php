@@ -14,7 +14,7 @@ final class FileResponder extends ProvidingResponder
 {
     protected function getProviders(): iterable
     {
-        yield File::class => function (File $respond): BinaryFileResponse {
+        yield File::class => static function (File $respond): BinaryFileResponse {
             $response = new BinaryFileResponse($respond->file, 200, [], true, null, false, false);
 
             if (File::USE_ETAG === (File::USE_ETAG & $respond->mode)) {

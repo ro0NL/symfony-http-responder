@@ -14,7 +14,7 @@ final class JsonResponder extends ProvidingResponder
 {
     protected function getProviders(): iterable
     {
-        yield Json::class => function (Json $respond): JsonResponse {
+        yield Json::class => static function (Json $respond): JsonResponse {
             if ($respond->raw) {
                 if (!\is_string($respond->data)) {
                     throw new \LogicException(sprintf('JSON must be a string, got "%s".', \gettype($respond->data)));

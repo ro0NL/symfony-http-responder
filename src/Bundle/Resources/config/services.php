@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\inline;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged;
 
-return function (ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container): void {
     $container->services()
         ->defaults()
             ->private()

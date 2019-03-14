@@ -10,7 +10,7 @@ use ro0NL\HttpResponder\JsonResponder;
 use ro0NL\HttpResponder\Responder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return function (ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container): void {
     $container->services()
         ->defaults()
             ->private()

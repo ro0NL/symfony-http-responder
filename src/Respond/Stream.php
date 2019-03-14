@@ -24,7 +24,7 @@ final class Stream extends AbstractRespond
      */
     public static function iterable(iterable $body): self
     {
-        return new self(function () use ($body): void {
+        return new self(static function () use ($body): void {
             foreach ($body as $line) {
                 echo $line;
             }

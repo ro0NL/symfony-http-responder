@@ -61,7 +61,7 @@ final class RouterResponderTest extends ResponderTestCase
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $urlGenerator->expects(self::any())
             ->method('generate')
-            ->willReturnCallback(function (string $name, array $params, int $type): string {
+            ->willReturnCallback(static function (string $name, array $params, int $type): string {
                 return $name.'/'.$type.'/'.json_encode($params);
             })
         ;

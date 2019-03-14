@@ -60,15 +60,15 @@ final class TestChainedResponderAggregate extends ProvidingResponder
 {
     protected function getProviders(): iterable
     {
-        yield TestRespondA::class => function (TestRespondA $respond): Response {
+        yield TestRespondA::class => static function (TestRespondA $respond): Response {
             throw new \LogicException('Should not happen.');
         };
 
-        yield TestRespondB::class => function (TestRespondB $respond): Response {
+        yield TestRespondB::class => static function (TestRespondB $respond): Response {
             return new Response('B');
         };
 
-        yield TestRespondB::class => function (TestRespondB $respond): Response {
+        yield TestRespondB::class => static function (TestRespondB $respond): Response {
             throw new \LogicException('Should not happen.');
         };
     }

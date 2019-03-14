@@ -43,7 +43,7 @@ final class DefaultResponderTest extends ResponderTestCase
 
     public function testRespondStream(): void
     {
-        $response = $this->doRespond(new Stream(function (): void {
+        $response = $this->doRespond(new Stream(static function (): void {
             echo 'hello stream';
         }));
 
@@ -77,7 +77,7 @@ final class DefaultResponderTest extends ResponderTestCase
         yield new Raw('contents');
         yield new Redirect('/path');
         yield new NoContent();
-        yield new Stream(function (): void {
+        yield new Stream(static function (): void {
         });
         yield Stream::iterable([]);
     }
