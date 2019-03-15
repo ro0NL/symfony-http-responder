@@ -29,6 +29,7 @@ $rules = [
     'no_binary_string' => true,
     'no_null_property_initialization' => true,
     'no_short_echo_tag' => true,
+    'no_unreachable_default_argument_value' => true,
     'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
     'no_unset_on_property' => true,
     'no_useless_else' => true,
@@ -38,11 +39,14 @@ $rules = [
     'php_unit_method_casing' => true,
     'php_unit_set_up_tear_down_visibility' => true,
     'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
+    'phpdoc_add_missing_param_annotation' => true,
     'phpdoc_inline_tag' => false,
     'phpdoc_order' => true,
     'phpdoc_to_comment' => false,
     'phpdoc_trim_consecutive_blank_line_separation' => true,
     'static_lambda' => true,
+    'strict_comparison' => true,
+    'strict_param' => true,
     'string_line_ending' => true,
 ];
 
