@@ -30,7 +30,7 @@ phpunit-install:
 phpunit:
 	${qa} simple-phpunit
 phpunit-coverage:
-	${qa} phpdbg -qrr /tools/.composer/vendor/bin/simple-phpunit --coverage-clover=var/coverage.xml
+	${qa} phpdbg -qrr /tools/simple-phpunit --coverage-clover=var/coverage.xml
 
 # code style / static analysis
 cs:
