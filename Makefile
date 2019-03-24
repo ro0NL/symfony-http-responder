@@ -10,7 +10,7 @@ dockerized=docker run --init -it --rm \
 	-v $(shell pwd):/app \
 	-w /app
 qa=${dockerized} \
-	-e COMPOSER_HOME=/app/var/composer \
+	-e COMPOSER_CACHE_DIR=/app/var/composer \
 	-e SYMFONY_PHPUNIT_DIR=/app/var/phpunit \
 	-e SYMFONY_PHPUNIT_VERSION=${PHPUNIT} \
 	jakzal/phpqa:php${PHP}-alpine
@@ -50,11 +50,11 @@ smoke-test: clean update phpunit cs sa
 shell:
 	${qa} /bin/sh
 composer-normalize: install
-	${qa} composer global require ${composer_args} localheinz/composer-normalize
 	${qa} composer normalize
 
 # starter-kit
 starter-kit-init:
-	git remote add --fetch starter-kit git@github.com:ro0NL/php-package-starter-kit.git
+	git remote add starter-kit git@github.com:ro0NL/php-package-starter-kit.git
 starter-kit-merge:
+	git fetch starter-kit master
 	git merge --no-commit --no-ff --allow-unrelated-histories starter-kit/master
