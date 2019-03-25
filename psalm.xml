@@ -3,7 +3,6 @@
        xmlns="https://getpsalm.org/schema/config"
        xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
        cacheDirectory="var/psalm"
-       autoloader="var/phpunit/phpunit-7.5/vendor/autoload.php"
        allowPhpStormGenerics="true"
        totallyTyped="false">
     <projectFiles>

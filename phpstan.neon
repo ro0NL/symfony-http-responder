@@ -8,7 +8,4 @@ parameters:
     paths:
         - src
         - tests
-    autoload_directories:
-        - tests
-        - var/phpunit/phpunit-7.5/src
     tmpDir: var/phpstan

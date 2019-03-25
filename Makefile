@@ -39,7 +39,7 @@ cs:
 cs-fix:
 	mkdir -p var
 	${qa} php-cs-fixer fix --config=.php_cs src/ tests/
-sa: install phpunit-install
+sa: phpunit-install install
 	${qa} phpstan analyse
 	${qa} psalm --show-info=false
 
