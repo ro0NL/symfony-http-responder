@@ -34,5 +34,13 @@
             "Vendor\\Package\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Vendor\\Package\\Tests\\": "tests"
+        },
+        "classmap": [
+            "var/phpunit/phpunit-7.5/src"
+        ]
+    },
     "minimum-stability": "dev"
 }
