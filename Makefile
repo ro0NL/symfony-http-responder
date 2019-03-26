@@ -17,11 +17,11 @@ qa=${dockerized} \
 composer_args=--prefer-dist --no-progress --no-interaction --no-suggest
 
 # deps
-install:
+install: phpunit-install
 	${qa} composer install ${composer_args}
-update:
+update: phpunit-install
 	${qa} composer update ${composer_args}
-update-lowest:
+update-lowest: phpunit-install
 	${qa} composer update ${composer_args} --prefer-stable --prefer-lowest
 
 # tests
@@ -39,7 +39,7 @@ cs:
 cs-fix:
 	mkdir -p var
 	${qa} php-cs-fixer fix --config=.php_cs src/ tests/
-sa: phpunit-install install
+sa: install
 	${qa} phpstan analyse
 	${qa} psalm --show-info=false
 
