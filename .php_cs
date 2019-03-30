@@ -55,5 +55,11 @@ return Config::create()
     ->setCacheFile(__DIR__.'/var/php-cs-fixer.cache')
     ->setRules($rules)
     ->setRiskyAllowed(true)
-    ->setFinder(Finder::create()->in(__DIR__))
+    ->setFinder(Finder::create()
+        ->in([
+            __DIR__.'/src',
+            __DIR__.'/tests',
+        ])
+        ->append([__FILE__])
+    )
 ;
