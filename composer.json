@@ -15,9 +15,6 @@
     "require": {
         "php": "^7.2"
     },
-    "conflict": {
-        "symfony/debug": "<3.4.21"
-    },
     "config": {
         "preferred-install": {
             "*": "dist"
@@ -39,7 +36,7 @@
             "Vendor\\Package\\Tests\\": "tests"
         },
         "classmap": [
-            "var/phpunit/phpunit-7.5/src"
+            "var/phpunit/phpunit-8.2/src"
         ]
     },
     "minimum-stability": "dev"

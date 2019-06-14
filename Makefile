@@ -1,8 +1,8 @@
 ifndef PHP
-	PHP=7.2
+	PHP=7.3
 endif
 ifndef PHPUNIT
-	PHPUNIT=7.5
+	PHPUNIT=8.2
 endif
 
 dockerized=docker run --init -it --rm \
@@ -14,7 +14,9 @@ qa=${dockerized} \
 	-e SYMFONY_PHPUNIT_DIR=/app/var/phpunit \
 	-e SYMFONY_PHPUNIT_VERSION=${PHPUNIT} \
 	jakzal/phpqa:php${PHP}-alpine
+
 composer_args=--prefer-dist --no-progress --no-interaction --no-suggest
+phpunit_args=--do-not-cache-result
 
 # deps
 install: phpunit-install
@@ -28,25 +30,28 @@ update-lowest: phpunit-install
 phpunit-install:
 	${qa} simple-phpunit install
 phpunit:
-	${qa} simple-phpunit
+	${qa} simple-phpunit ${phpunit_args}
 phpunit-coverage:
-	${qa} phpdbg -qrr /tools/simple-phpunit --coverage-clover=var/coverage.xml
+	${qa} phpdbg -qrr /tools/simple-phpunit ${phpunit_args} --coverage-clover=var/coverage.xml
 
-# code style / static analysis
+# code style
 cs:
-	mkdir -p var
 	${qa} php-cs-fixer fix --dry-run --verbose --diff
 cs-fix:
-	mkdir -p var
 	${qa} php-cs-fixer fix
-sa: install
+
+# static analysis
+phpstan: install
 	${qa} phpstan analyse
+psalm: install
+	${qa} psalm --show-info=false
+psalm-info: install
 	${qa} psalm --show-info=false
 
 # misc
 clean:
-	rm -rf var/phpstan var/psalm var/php-cs-fixer.cache
-smoke-test: clean update phpunit cs sa
+	 git clean -dxf var/
+smoke-test: clean update phpunit cs phpstan psalm
 shell:
 	${qa} /bin/sh
 composer-normalize: install
