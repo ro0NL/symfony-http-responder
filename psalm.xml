@@ -3,8 +3,9 @@
        xmlns="https://getpsalm.org/schema/config"
        xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
        cacheDirectory="var/psalm"
-       allowPhpStormGenerics="true"
-       totallyTyped="false">
+       totallyTyped="true"
+       findUnusedCode="true"
+>
     <projectFiles>
         <directory name="src" />
         <directory name="tests" />
@@ -15,10 +16,15 @@
 
     <issueHandlers>
         <!-- info = conventional, suppress = false positive -->
-        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="tests" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <PropertyNotSetInConstructor errorLevel="info" />
     </issueHandlers>
 
     <mockClasses>
-        <class name="PHPUnit\Framework\MockObject\MockObject"/>
+        <class name="PHPUnit\Framework\MockObject\MockObject" />
     </mockClasses>
 </psalm>
