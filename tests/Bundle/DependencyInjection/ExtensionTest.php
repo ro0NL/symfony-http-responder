@@ -37,11 +37,9 @@ final class ExtensionTest extends TestCase
         /** @var IteratorArgument $responders */
         $responders = $responder->getArgument(0);
 
-        self::assertInstanceOf(Reference::class, $decoratorRef);
         self::assertSame(TestDecoratingResponder::class, $decorator->getClass());
         self::assertSame(OuterResponder::class, $outer->getClass());
         self::assertSame(ChainResponder::class, $responder->getClass());
-        self::assertInstanceOf(IteratorArgument::class, $responders);
         self::assertSame([
             TestResponder::class,
             TestProvidingResponder::class,
@@ -127,7 +125,6 @@ class TestDecoratingResponder implements Responder
 {
     public function __construct(Responder $responder)
     {
-        $responder;
     }
 
     public function respond(Respond $respond): Response
@@ -140,6 +137,5 @@ class TestService
 {
     public function __construct(Responder $responder)
     {
-        $responder;
     }
 }

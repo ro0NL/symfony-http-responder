@@ -3,7 +3,6 @@
        xmlns="https://getpsalm.org/schema/config"
        xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
        cacheDirectory="var/psalm"
-       totallyTyped="true"
        findUnusedCode="true"
 >
     <projectFiles>
@@ -18,10 +17,16 @@
         <!-- info = conventional, suppress = false positive -->
         <PossiblyUnusedMethod>
             <errorLevel type="suppress">
+                <file name="src/Test/ResponderTestCase.php" />
                 <directory name="tests" />
             </errorLevel>
         </PossiblyUnusedMethod>
         <PropertyNotSetInConstructor errorLevel="info" />
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="ro0NL\HttpResponder\Bundle\HttpResponderBundle" />
+            </errorLevel>
+        </UnusedClass>
     </issueHandlers>
 
     <mockClasses>

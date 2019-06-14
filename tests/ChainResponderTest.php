@@ -60,14 +60,17 @@ final class TestChainedResponderAggregate extends ProvidingResponder
 {
     protected function getProviders(): iterable
     {
+        /** @psalm-suppress UnusedClosureParam */
         yield TestRespondA::class => static function (TestRespondA $respond): Response {
             throw new \LogicException('Should not happen.');
         };
 
+        /** @psalm-suppress UnusedClosureParam */
         yield TestRespondB::class => static function (TestRespondB $respond): Response {
             return new Response('B');
         };
 
+        /** @psalm-suppress UnusedClosureParam */
         yield TestRespondB::class => static function (TestRespondB $respond): Response {
             throw new \LogicException('Should not happen.');
         };

@@ -10,3 +10,11 @@ parameters:
         - src
         - tests
     tmpDir: var/phpstan
+
+    ignoreErrors:
+        - '#Constructor of class ro0NL\\HttpResponder\\Tests\\Bundle\\DependencyInjection\\Test(DecoratingResponder|Service) has an unused parameter \$responder\.#'
+
+        # Symfony
+        -
+            message: '#Call to deprecated function Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\tagged\(\)#'
+            path: src/Bundle/Resources/config/services.php
