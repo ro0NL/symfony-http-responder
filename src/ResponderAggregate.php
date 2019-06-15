@@ -13,7 +13,7 @@ namespace ro0NL\HttpResponder;
 interface ResponderAggregate extends Responder
 {
     /**
-     * @psalm-param class-string<Respond\Respond> $respondClass
+     * @param class-string<Respond\Respond> $respondClass
      */
     public function getResponder(string $respondClass): ?Responder;
 }

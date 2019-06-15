@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractRespond implements Respond
 {
     /**
-     * @var array
+     * @var array{0: int, 1: string|null}
      */
     public $status = [Response::HTTP_OK, null];
 
@@ -26,12 +26,12 @@ abstract class AbstractRespond implements Respond
     public $date;
 
     /**
-     * @var string[]|string[][]
+     * @var array<string, string[]>
      */
     public $headers = [];
 
     /**
-     * @var array
+     * @var array<string, scalar[]>
      */
     public $flashes = [];
 
@@ -40,6 +40,9 @@ abstract class AbstractRespond implements Respond
      */
     public $linkProvider;
 
+    /**
+     * @return $this
+     */
     public function withStatus(int $code, string $text = null): self
     {
         $this->status = [$code, $text];
@@ -47,6 +50,9 @@ abstract class AbstractRespond implements Respond
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function withDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -55,11 +61,17 @@ abstract class AbstractRespond implements Respond
     }
 
     /**
-     * @param string[]|string[][] $headers
+     * @param array<string, string|string[]> $headers
+     *
+     * @return $this
      */
     public function withHeaders(array $headers): self
     {
-        $this->headers = $headers;
+        $this->headers = [];
+
+        foreach ($headers as $name => $values) {
+            $this->withHeader($name, $values);
+        }
 
         return $this;
     }
@@ -74,15 +86,26 @@ abstract class AbstractRespond implements Respond
         return $this;
     }
 
+    /**
+     * @param array<string, scalar|scalar[]> $flashes
+     *
+     * @return $this
+     */
     public function withFlashes(array $flashes): self
     {
-        $this->flashes = $flashes;
+        $this->flashes = [];
+
+        foreach ($flashes as $type => $messages) {
+            $this->withFlash($type, $messages);
+        }
 
         return $this;
     }
 
     /**
-     * @param mixed $message
+     * @param scalar|scalar[] $message
+     *
+     * @return $this
      */
     public function withFlash(string $type, $message): self
     {
@@ -98,6 +121,8 @@ abstract class AbstractRespond implements Respond
     /**
      * @param string[]        $rels
      * @param (string|bool)[] $attributes
+     *
+     * @return $this
      */
     public function withLink(string $href, array $rels = [], array $attributes = []): self
     {
@@ -112,8 +137,12 @@ abstract class AbstractRespond implements Respond
         foreach ($attributes as $attribute => $value) {
             if (false === $value) {
                 continue;
+            } elseif (true === $value) {
+                $attribute = $value = (string) $attribute;
+            } elseif (\is_int($attribute)) {
+                $attribute = $value = (string) $value;
             }
-            $link = $link->withAttribute($attribute, true === $value ? (string) $attribute : $value);
+            $link = $link->withAttribute($attribute, $value);
         }
 
         if (null === $this->linkProvider) {

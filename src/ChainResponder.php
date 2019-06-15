@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 final class ChainResponder implements Responder
 {
     /**
-     * @var iterable|Responder[]
+     * @var iterable<int, Responder>
      */
     private $responders;
 
     /**
-     * @param iterable|Responder[] $responders
+     * @param iterable<int, Responder> $responders
      */
     public function __construct(iterable $responders)
     {

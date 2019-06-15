@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 final class FileResponder extends ProvidingResponder
 {
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         yield File::class => static function (File $respond): BinaryFileResponse {

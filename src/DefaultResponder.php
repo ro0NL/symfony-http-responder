@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 final class DefaultResponder extends ProvidingResponder
 {
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         yield Raw::class => static function (Raw $respond): Response {

@@ -46,6 +46,9 @@ final class Json extends AbstractRespond
         return $respond;
     }
 
+    /**
+     * @return $this
+     */
     public function withCallback(string $callback): self
     {
         $this->callback = $callback;

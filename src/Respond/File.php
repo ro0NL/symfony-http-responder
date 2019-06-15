@@ -27,7 +27,7 @@ final class File extends AbstractRespond
     public $mode;
 
     /**
-     * @var array|null
+     * @var array{0: string, 1: string, 2: string}|null
      */
     public $contentDisposition;
 
@@ -40,6 +40,9 @@ final class File extends AbstractRespond
         $this->mode = $mode;
     }
 
+    /**
+     * @return $this
+     */
     public function asInlineContent(string $filename = '', string $filenameFallback = ''): self
     {
         $this->contentDisposition = [ResponseHeaderBag::DISPOSITION_INLINE, $filename, $filenameFallback];
@@ -47,6 +50,9 @@ final class File extends AbstractRespond
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function asDownload(string $filename = '', string $filenameFallback = ''): self
     {
         $this->contentDisposition = [ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename, $filenameFallback];

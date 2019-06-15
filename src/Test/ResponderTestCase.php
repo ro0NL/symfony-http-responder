@@ -132,9 +132,9 @@ abstract class ResponderTestCase extends TestCase
      */
     public function testRespondWithFlashes(AbstractRespond $respond): void
     {
-        $this->getOuterResponder()->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, []]]));
+        $this->getOuterResponder()->respond($respond->withFlashes(['type1' => 'X', 'TYPE2' => ['y', true, 1]]));
 
-        self::assertSame(['type1' => ['X'], 'TYPE2' => ['y', true, []]], $this->getFlashBag()->all());
+        self::assertSame(['type1' => ['X'], 'TYPE2' => ['y', true, 1]], $this->getFlashBag()->all());
     }
 
     /**
@@ -145,9 +145,9 @@ abstract class ResponderTestCase extends TestCase
         $this->getOuterResponder()->respond($respond
             ->withFlash('type1', 'X')
             ->withFlash('TYPE2', 'not ignored')
-            ->withFlash('TYPE2', ['y', true, []]));
+            ->withFlash('TYPE2', ['y', true, 1]));
 
-        self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, []]], $this->getFlashBag()->all());
+        self::assertSame(['type1' => ['X'], 'TYPE2' => ['not ignored', 'y', true, 1]], $this->getFlashBag()->all());
     }
 
     /**
@@ -164,9 +164,9 @@ abstract class ResponderTestCase extends TestCase
             ->withLink('href')
             ->withLink('href{templated}')
             ->withLink('href2', ['rel', 'rel2'])
-            ->withLink('href3', ['rel'], ['a' => true, 'b', 'c' => 'foo bar', 'd' => false, 'e' => 'boo']));
+            ->withLink('href3', ['rel'], ['a' => true, 'b', 'c' => 'foo bar', 'd' => false, 'e' => 'boo', 'f' => 'f']));
 
-        self::assertSame(['custom', '<href>; rel="", <href2>; rel="rel rel2", <href3>; rel="rel"; a; b; c="foo bar"; e="boo"'], $response->headers->get('link', null, false));
+        self::assertSame(['custom', '<href>; rel="", <href2>; rel="rel rel2", <href3>; rel="rel"; a; b; c="foo bar"; e="boo"; f'], $response->headers->get('link', null, false));
     }
 
     public function testRespondUnknown(): void
@@ -204,8 +204,10 @@ abstract class ResponderTestCase extends TestCase
 
     protected static function assertResponse(Response $response, int $status = null): void
     {
-        if (Response::class !== static::DEFAULT_RESPONSE_CLASS) {
-            self::assertInstanceOf(static::DEFAULT_RESPONSE_CLASS, $response);
+        /** @var class-string $class */
+        $class = static::DEFAULT_RESPONSE_CLASS;
+        if (Response::class !== $class) {
+            self::assertInstanceOf($class, $response);
         }
 
         self::assertSame($status ?? static::DEFAULT_RESPONSE_STATUS, $response->getStatusCode());
@@ -214,7 +216,7 @@ abstract class ResponderTestCase extends TestCase
     abstract protected function getResponder(): Responder;
 
     /**
-     * @return iterable|Respond[]
+     * @return iterable<Respond>
      */
     abstract protected function getResponds(): iterable;
 

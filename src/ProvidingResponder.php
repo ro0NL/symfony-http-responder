@@ -18,9 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class ProvidingResponder implements ResponderAggregate
 {
     /**
-     * @psalm-var array<class-string<Respond>, Responder|false>
-     *
-     * @var array
+     * @var array<class-string<Respond>, Responder|false>
      */
     private $cache = [];
 
@@ -35,9 +33,6 @@ abstract class ProvidingResponder implements ResponderAggregate
         return $responder->respond($respond);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getResponder(string $respondClass): ?Responder
     {
         if (isset($this->cache[$respondClass])) {
@@ -51,7 +46,7 @@ abstract class ProvidingResponder implements ResponderAggregate
 
             return $this->cache[$respondClass] = new class($callback) implements Responder {
                 /**
-                 * @var callable
+                 * @var callable(Respond):Response
                  */
                 private $callback;
 
@@ -73,7 +68,7 @@ abstract class ProvidingResponder implements ResponderAggregate
     }
 
     /**
-     * @return iterable|callable[]
+     * @return iterable<class-string<Respond>, callable(Respond):Response>
      */
     abstract protected function getProviders(): iterable;
 }

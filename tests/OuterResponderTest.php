@@ -42,7 +42,7 @@ final class OuterResponderTest extends ResponderTestCase
 
         $this->expectException(\LogicException::class);
 
-        $responder->respond($this->getMockForAbstractClass(AbstractRespond::class)->withFlashes(['unsupported']));
+        $responder->respond($this->getMockForAbstractClass(AbstractRespond::class)->withFlashes(['type' => 'unsupported']));
     }
 
     protected function getResponder(): Responder

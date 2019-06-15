@@ -20,7 +20,7 @@ final class Stream extends AbstractRespond
     }
 
     /**
-     * @param iterable|string[] $body
+     * @param iterable<int, string> $body
      */
     public static function iterable(iterable $body): self
     {

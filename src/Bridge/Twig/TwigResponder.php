@@ -24,6 +24,9 @@ final class TwigResponder extends ProvidingResponder
         $this->twig = $twig;
     }
 
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         yield Template::class => function (Template $respond): Response {

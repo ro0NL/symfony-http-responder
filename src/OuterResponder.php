@@ -40,7 +40,7 @@ final class OuterResponder implements Responder
 
         if (null !== $this->flashBag) {
             foreach ($respond->flashes as $type => $messages) {
-                foreach ((array) $messages as $message) {
+                foreach ($messages as $message) {
                     $this->flashBag->add($type, $message);
                 }
             }
@@ -64,11 +64,13 @@ final class OuterResponder implements Responder
                     continue;
                 }
                 $attributes = ['', sprintf('rel="%s"', implode(' ', $link->getRels()))];
+                /** @psalm-suppress MixedAssignment */
+                /** @var scalar $value */
                 foreach ($link->getAttributes() as $attribute => $value) {
-                    if ($attribute === $value || \is_int($attribute)) {
+                    if ($attribute === $value) {
                         $attributes[] = $value;
                     } else {
-                        $attributes[] = sprintf('%s="%s"', $attribute, $value);
+                        $attributes[] = sprintf('%s="%s"', $attribute, (string) $value);
                     }
                 }
                 $links[] = sprintf('<%s>%s', $link->getHref(), implode('; ', $attributes));

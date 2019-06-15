@@ -4,6 +4,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
     cacheDirectory="var/psalm"
+    totallyTyped="true"
     findUnusedCode="true"
 >
     <projectFiles>
@@ -15,6 +16,12 @@
     </projectFiles>
 
     <issueHandlers>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
+                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturnCallback"/>
+            </errorLevel>
+        </InternalMethod>
         <PossiblyUnusedMethod>
             <errorLevel type="suppress">
                 <file name="src/Test/ResponderTestCase.php" />
@@ -32,8 +39,4 @@
             </errorLevel>
         </UnusedClass>
     </issueHandlers>
-
-    <mockClasses>
-        <class name="PHPUnit\Framework\MockObject\MockObject"/>
-    </mockClasses>
 </psalm>

@@ -58,6 +58,7 @@ final class TestChainedResponder implements Responder
 
 final class TestChainedResponderAggregate extends ProvidingResponder
 {
+    /** @psalm-suppress MoreSpecificReturnType */
     protected function getProviders(): iterable
     {
         /** @psalm-suppress UnusedClosureParam */

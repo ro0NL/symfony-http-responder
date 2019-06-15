@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 final class JsonResponder extends ProvidingResponder
 {
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         yield Json::class => static function (Json $respond): JsonResponse {

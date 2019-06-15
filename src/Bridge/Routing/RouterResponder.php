@@ -23,6 +23,9 @@ final class RouterResponder extends ProvidingResponder
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         yield RouteRedirect::class => function (RouteRedirect $respond): RedirectResponse {
