@@ -19,7 +19,6 @@ jobs:
     - stage: Code quality
       script:
         - make cs
-        - make phpstan
         - make psalm
 
 script:

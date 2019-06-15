@@ -41,8 +41,6 @@ cs-fix:
 	${qa} php-cs-fixer fix
 
 # static analysis
-phpstan: install
-	${qa} phpstan analyse
 psalm: install
 	${qa} psalm --show-info=false
 psalm-info: install
@@ -51,7 +49,7 @@ psalm-info: install
 # misc
 clean:
 	 git clean -dxf var/
-smoke-test: clean update phpunit cs phpstan psalm
+smoke-test: clean update phpunit cs psalm
 shell:
 	${qa} /bin/sh
 composer-normalize: install

@@ -1,27 +1,31 @@
 <?xml version="1.0"?>
-<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="https://getpsalm.org/schema/config"
-       xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
-       cacheDirectory="var/psalm"
-       findUnusedCode="true"
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
+    cacheDirectory="var/psalm"
+    findUnusedCode="true"
 >
     <projectFiles>
-        <directory name="src" />
-        <directory name="tests" />
+        <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <!-- info = conventional, suppress = false positive -->
         <PossiblyUnusedMethod>
             <errorLevel type="suppress">
                 <file name="src/Test/ResponderTestCase.php" />
                 <directory name="tests" />
             </errorLevel>
         </PossiblyUnusedMethod>
-        <PropertyNotSetInConstructor errorLevel="info" />
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
         <UnusedClass>
             <errorLevel type="suppress">
                 <referencedClass name="ro0NL\HttpResponder\Bundle\HttpResponderBundle" />
@@ -30,6 +34,6 @@
     </issueHandlers>
 
     <mockClasses>
-        <class name="PHPUnit\Framework\MockObject\MockObject" />
+        <class name="PHPUnit\Framework\MockObject\MockObject"/>
     </mockClasses>
 </psalm>
