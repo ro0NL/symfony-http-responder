@@ -216,7 +216,7 @@ abstract class ResponderTestCase extends TestCase
     abstract protected function getResponder(): Responder;
 
     /**
-     * @return iterable<Respond>
+     * @return iterable<int, Respond>
      */
     abstract protected function getResponds(): iterable;
 
