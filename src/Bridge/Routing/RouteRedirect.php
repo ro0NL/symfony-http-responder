@@ -35,6 +35,9 @@ final class RouteRedirect extends AbstractRespond
         $this->status[0] = Response::HTTP_FOUND;
     }
 
+    /**
+     * @return $this
+     */
     public function withAbsoluteUrl(): self
     {
         $this->referenceType = UrlGeneratorInterface::ABSOLUTE_URL;
@@ -42,6 +45,9 @@ final class RouteRedirect extends AbstractRespond
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function withRelativePath(): self
     {
         $this->referenceType = UrlGeneratorInterface::RELATIVE_PATH;
@@ -49,6 +55,9 @@ final class RouteRedirect extends AbstractRespond
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function withNetworkPath(): self
     {
         $this->referenceType = UrlGeneratorInterface::NETWORK_PATH;

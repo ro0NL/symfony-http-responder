@@ -78,6 +78,8 @@ abstract class AbstractRespond implements Respond
 
     /**
      * @param string|string[] $value
+     *
+     * @return $this
      */
     public function withHeader(string $name, $value): self
     {

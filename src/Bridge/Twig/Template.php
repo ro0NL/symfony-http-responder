@@ -32,6 +32,9 @@ final class Template extends AbstractRespond
         $this->context = $context;
     }
 
+    /**
+     * @return $this
+     */
     public function stream(): self
     {
         $this->stream = true;
