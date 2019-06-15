@@ -1,9 +1,6 @@
 ifndef PHP
 	PHP=7.3
 endif
-ifndef PHPUNIT
-	PHPUNIT=8.2
-endif
 
 dockerized=docker run --init -it --rm \
 	-u $(shell id -u):$(shell id -g) \
@@ -11,28 +8,30 @@ dockerized=docker run --init -it --rm \
 	-w /app
 qa=${dockerized} \
 	-e COMPOSER_CACHE_DIR=/app/var/composer \
-	-e SYMFONY_PHPUNIT_DIR=/app/var/phpunit \
-	-e SYMFONY_PHPUNIT_VERSION=${PHPUNIT} \
 	jakzal/phpqa:php${PHP}-alpine
 
 composer_args=--prefer-dist --no-progress --no-interaction --no-suggest
-phpunit_args=--do-not-cache-result
+phpunit_args=
 
 # deps
-install: phpunit-install
+install:
 	${qa} composer install ${composer_args}
-update: phpunit-install
+update:
 	${qa} composer update ${composer_args}
-update-lowest: phpunit-install
+update-lowest:
 	${qa} composer update ${composer_args} --prefer-stable --prefer-lowest
+autoload-dev: install
+	${qa} php -r "file_put_contents('var/composer-dev.json', json_encode(array_merge_recursive(json_decode(file_get_contents('composer.json'), true), ['autoload' => ['files' => [glob('/tools/.composer/vendor-bin/symfony/vendor/bin/.phpunit/*')[0].'/vendor/autoload.php']]])));"
+	${qa} sh -c "COMPOSER=var/composer-dev.json composer dump-autoload"
 
 # tests
-phpunit-install:
-	${qa} simple-phpunit install
 phpunit:
 	${qa} simple-phpunit ${phpunit_args}
 phpunit-coverage:
 	${qa} phpdbg -qrr /tools/simple-phpunit ${phpunit_args} --coverage-clover=var/coverage.xml
+phpunit-pull-src:
+	rm -rf var/phpunit
+	${qa} sh -c "find /tools/.composer/vendor-bin/symfony/vendor/bin/.phpunit/ -maxdepth 1 -type d -name phpunit-\* | head -1 | xargs -I {} cp -R {} var/phpunit"
 
 # code style
 cs:
@@ -41,10 +40,10 @@ cs-fix:
 	${qa} php-cs-fixer fix
 
 # static analysis
-psalm: install
+psalm: autoload-dev
 	${qa} psalm --show-info=false
-psalm-info: install
-	${qa} psalm --show-info=false
+psalm-info: autoload-dev
+	${qa} psalm --show-info=true
 
 # misc
 clean:
