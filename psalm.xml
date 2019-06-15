@@ -27,8 +27,4 @@
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>
-
-    <mockClasses>
-        <class name="PHPUnit\Framework\MockObject\MockObject"/>
-    </mockClasses>
 </psalm>
