@@ -59,6 +59,9 @@ qa-update:
 	docker pull ${qa_image}
 
 # misc
+list:
+	#make -p | sort | grep -E "^([a-z]++\-?)++\:(\ ([a-z]++\-?)++)+*$"
+	echo "$$(make -p | sort | grep -E '^([a-z]++\-?)++\:')" | while read -r cmd; do echo "- $${cmd%:*}"; if [ -n "$${cmd#*:}" ]; then echo -n "  - "; echo "$${cmd#*:}" | cut -c2- | sed -e "s/ /, /g"; fi; done
 clean:
 	 git clean -dxf var/
 smoke-test: clean update phpunit cs psalm
