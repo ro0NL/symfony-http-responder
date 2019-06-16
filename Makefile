@@ -2,16 +2,17 @@ ifndef PHP
 	PHP=7.3
 endif
 
+qa_image=jakzal/phpqa:php${PHP}-alpine
+composer_args=--prefer-dist --no-progress --no-interaction --no-suggest
+phpunit_args=
+
 dockerized=docker run --init -it --rm \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(shell pwd):/app \
 	-w /app
 qa=${dockerized} \
 	-e COMPOSER_CACHE_DIR=/app/var/composer \
-	jakzal/phpqa:php${PHP}-alpine
-
-composer_args=--prefer-dist --no-progress --no-interaction --no-suggest
-phpunit_args=
+	${qa_image}
 
 # deps
 install:
@@ -45,6 +46,18 @@ psalm: autoload-dev
 psalm-info: autoload-dev
 	${qa} psalm --show-info=true
 
+# starter-kit
+starter-kit-init:
+	git remote add starter-kit git@github.com:ro0NL/php-package-starter-kit.git
+starter-kit-merge:
+	git fetch starter-kit master
+	git merge --no-commit --no-ff --allow-unrelated-histories starter-kit/master
+
+# phpqa
+qa-update:
+	docker rmi -f ${qa_image}
+	docker pull ${qa_image}
+
 # misc
 clean:
 	 git clean -dxf var/
@@ -53,10 +66,3 @@ shell:
 	${qa} /bin/sh
 composer-normalize: install
 	${qa} composer normalize
-
-# starter-kit
-starter-kit-init:
-	git remote add starter-kit git@github.com:ro0NL/php-package-starter-kit.git
-starter-kit-merge:
-	git fetch starter-kit master
-	git merge --no-commit --no-ff --allow-unrelated-histories starter-kit/master
