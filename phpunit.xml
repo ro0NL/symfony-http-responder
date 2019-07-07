@@ -6,6 +6,10 @@
     bootstrap="vendor/autoload.php"
     failOnRisky="true"
     failOnWarning="true"
+    cacheResult="true"
+    cacheResultFile="var/phpunit.cache"
+    executionOrder="defects"
+    stopOnDefect="true"
 >
     <testsuites>
         <testsuite name="main">
