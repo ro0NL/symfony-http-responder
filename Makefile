@@ -32,7 +32,8 @@ phpunit:
 phpunit-coverage:
 	${qa} phpdbg -qrr /tools/simple-phpunit ${phpunit_args} --coverage-clover=var/coverage.xml
 phpunit-pull:
-	if [ ! -d var/phpunit ]; then ${qa} sh -c "cp -RL /tools/.composer/vendor-bin/symfony/vendor/bin/.phpunit/phpunit-${PHPUNIT} var/phpunit"; fi
+	rm -rf var/phpunit
+	${qa} sh -c "cp -RL /tools/.composer/vendor-bin/symfony/vendor/bin/.phpunit/phpunit-${PHPUNIT} var/phpunit"
 
 # code style
 cs:
@@ -41,9 +42,9 @@ cs-fix:
 	${qa} php-cs-fixer fix
 
 # static analysis
-psalm: phpunit-pull
+psalm:
 	${qa} psalm --show-info=false
-psalm-info: phpunit-pull
+psalm-info:
 	${qa} psalm --show-info=true
 
 # starter-kit
@@ -61,7 +62,7 @@ qa-update:
 # misc
 clean:
 	 git clean -dxf var/
-smoke-test: clean update phpunit cs psalm
+smoke-test: clean update phpunit cs phpunit-pull psalm
 shell:
 	${qa} /bin/sh
 composer-normalize: install

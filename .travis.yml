@@ -18,7 +18,7 @@ jobs:
     - stage: Code quality
       script:
         - make cs
-        - make psalm
+        - make install phpunit-pull psalm
 
 script:
   - if [[ ${DEPS} == low ]]; then make update-lowest; else make update; fi
