@@ -18,7 +18,7 @@
 
     <issueHandlers>
         <InternalMethod>
-            <errorLevel type="suppress">
+            <errorLevel type="info">
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturnCallback"/>
             </errorLevel>

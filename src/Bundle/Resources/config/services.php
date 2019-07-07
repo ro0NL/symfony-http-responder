@@ -11,6 +11,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
+    /** @psalm-suppress DeprecatedFunction */
     $container->services()
         ->defaults()
             ->private()
