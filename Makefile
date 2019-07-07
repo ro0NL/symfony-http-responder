@@ -42,9 +42,9 @@ cs-fix:
 	${qa} php-cs-fixer fix
 
 # static analysis
-psalm:
+psalm: install phpunit-pull
 	${qa} psalm --show-info=false
-psalm-info:
+psalm-info: install phpunit-pull
 	${qa} psalm --show-info=true
 
 # starter-kit

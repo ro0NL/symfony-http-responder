@@ -16,9 +16,7 @@ jobs:
     - stage: Unit tests
     - env: PHP=7.2 DEPS=low
     - stage: Code quality
-      script:
-        - make cs
-        - make install phpunit-pull psalm
+      script: make cs psalm
 
 script:
   - if [[ ${DEPS} == low ]]; then make update-lowest; else make update; fi
