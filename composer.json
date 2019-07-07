@@ -44,13 +44,5 @@
             "ro0NL\\HttpResponder\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "ro0NL\\HttpResponder\\Tests\\": "tests"
-        },
-        "classmap": [
-            "var/phpunit/phpunit-8.2/src"
-        ]
-    },
     "minimum-stability": "dev"
 }
