@@ -38,7 +38,9 @@ return [
 ];
 ```
 
-# Creating a Providing Responder
+# Create a Providing Responder
+
+Provide custom respond types using the `ProvidingResponder`.
 
 ```php
 use ro0NL\HttpResponder\ProvidingResponder;
@@ -65,9 +67,9 @@ responder.
 
 In case your responder implements the `Responder` interface but serves as a provider it should be tagged manually.
 
-# Creating a Decorating Responder
+# Create a Decorating Responder
 
-To add behaviors to the main responder use a decorator.
+Add behaviors to the main responder using a decorator.
 
 ```php
 use ro0NL\HttpResponder\Responder;
