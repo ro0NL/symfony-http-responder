@@ -140,8 +140,8 @@ The bundle's main service identifier is `http_responder` and is aliased to its c
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
-[master:travis]: https://travis-ci.org/ro0NL/symfony-http-responder
-[master:travis:img]: https://img.shields.io/travis/ro0NL/symfony-http-responder/master.svg?style=flat-square
+[master:travis]: https://travis-ci.com/ro0NL/symfony-http-responder
+[master:travis:img]: https://img.shields.io/travis/com/ro0NL/symfony-http-responder/master.svg?style=flat-square
 [packagist]: https://packagist.org/packages/ro0NL/http-responder
 [packagist:img]: https://img.shields.io/packagist/v/ro0NL/http-responder.svg?style=flat-square
 [wiki:adr]: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
