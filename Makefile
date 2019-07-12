@@ -1,5 +1,5 @@
 ifndef PHP
-	PHP=7.3
+	PHP=7.2
 endif
 ifndef PHPUNIT
 	PHPUNIT=8.2
