@@ -61,7 +61,7 @@ qa-update:
 
 # misc
 clean:
-	 git clean -dxf var/
+	git clean -dxf var/
 smoke-test: clean update phpunit cs psalm
 shell:
 	${qa} /bin/sh
