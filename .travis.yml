@@ -14,7 +14,8 @@ branches:
 jobs:
   include:
     - stage: Unit tests
-    - env: PHP=7.2 DEPS=low
+    - env: DEPS=low
+    - env: PHP=7.3
     - stage: Code quality
       script: make cs psalm
 
