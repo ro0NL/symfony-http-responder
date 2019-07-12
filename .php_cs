@@ -11,7 +11,7 @@ $rules = [
     '@Symfony:risky' => true,
     '@PHP71Migration' => true,
     '@PHP71Migration:risky' => true,
-    '@PHPUnit60Migration:risky' => true,
+    '@PHPUnit75Migration:risky' => true,
     'array_syntax' => ['syntax' => 'short'],
     'combine_consecutive_unsets' => true,
     'comment_to_phpdoc' => true,
