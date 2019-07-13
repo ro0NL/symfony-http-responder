@@ -47,6 +47,7 @@ $rules = [
     'phpdoc_to_comment' => false,
     'phpdoc_trim_consecutive_blank_line_separation' => true,
     'phpdoc_var_annotation_correct_order' => true,
+    'simple_to_complex_string_variable' => true,
     'static_lambda' => true,
     'strict_comparison' => true,
     'strict_param' => true,
