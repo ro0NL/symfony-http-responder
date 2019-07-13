@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class ProvidingResponder implements ResponderAggregate
 {
-    /**
-     * @var array<class-string<Respond>, Responder|false>
-     */
+    /** @var array<class-string<Respond>, Responder|false> */
     private $cache = [];
 
     final public function respond(Respond $respond): Response
@@ -45,9 +43,7 @@ abstract class ProvidingResponder implements ResponderAggregate
             }
 
             return $this->cache[$respondClass] = new class($callback) implements Responder {
-                /**
-                 * @var callable(Respond):Response
-                 */
+                /** @var callable(Respond):Response */
                 private $callback;
 
                 public function __construct(callable $callback)

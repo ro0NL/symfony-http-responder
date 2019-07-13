@@ -11,19 +11,9 @@ use ro0NL\HttpResponder\Respond\AbstractRespond;
  */
 final class Template extends AbstractRespond
 {
-    /**
-     * @var string
-     */
     public $name;
-
-    /**
-     * @var array
-     */
     public $context;
-
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $stream = false;
 
     public function __construct(string $name, array $context = [])

@@ -9,9 +9,6 @@ namespace ro0NL\HttpResponder\Respond;
  */
 final class Stream extends AbstractRespond
 {
-    /**
-     * @var callable
-     */
     public $callback;
 
     public function __construct(callable $callback)

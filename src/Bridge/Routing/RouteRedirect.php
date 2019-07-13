@@ -13,19 +13,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class RouteRedirect extends AbstractRespond
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $name;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     public $parameters;
-
-    /**
-     * @var int
-     */
+    /** @var int */
     public $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
 
     public function __construct(string $name, array $parameters = [])

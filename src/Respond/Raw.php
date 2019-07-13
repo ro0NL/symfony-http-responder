@@ -9,9 +9,6 @@ namespace ro0NL\HttpResponder\Respond;
  */
 final class Raw extends AbstractRespond
 {
-    /**
-     * @var string
-     */
     public $contents;
 
     public function __construct(string $contents)

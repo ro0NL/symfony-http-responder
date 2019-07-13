@@ -13,9 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class RouterResponder extends ProvidingResponder
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
     private $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator)

@@ -9,24 +9,13 @@ namespace ro0NL\HttpResponder\Respond;
  */
 final class Json extends AbstractRespond
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $data;
-
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     public $encodingOptions;
-
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     public $callback;
-
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $raw = false;
 
     /**

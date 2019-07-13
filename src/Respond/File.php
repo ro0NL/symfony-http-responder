@@ -16,19 +16,11 @@ final class File extends AbstractRespond
     public const USE_ETAG = 1;
     public const USE_MODIFICATION_DATE = 2;
 
-    /**
-     * @var \SplFileInfo|string
-     */
+    /** @var \SplFileInfo|string */
     public $file;
-
-    /**
-     * @var int
-     */
+    /** @var int */
     public $mode;
-
-    /**
-     * @var array{0: string, 1: string, 2: string}|null
-     */
+    /** @var array{0: string, 1: string, 2: string}|null */
     public $contentDisposition;
 
     /**

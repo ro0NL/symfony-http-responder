@@ -14,14 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 final class OuterResponder implements Responder
 {
-    /**
-     * @var Responder
-     */
     private $responder;
-
-    /**
-     * @var FlashBagInterface|null
-     */
     private $flashBag;
 
     public function __construct(Responder $responder, FlashBagInterface $flashBag = null)

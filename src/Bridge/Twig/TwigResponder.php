@@ -14,9 +14,6 @@ use Twig\Environment;
  */
 final class TwigResponder extends ProvidingResponder
 {
-    /**
-     * @var Environment
-     */
     private $twig;
 
     public function __construct(Environment $twig)

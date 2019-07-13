@@ -24,9 +24,7 @@ abstract class ResponderTestCase extends TestCase
     protected const DEFAULT_RESPONSE_STATUS = 200;
     protected const IS_CATCH_ALL_RESPONDER = false;
 
-    /**
-     * @var FlashBagInterface
-     */
+    /** @var FlashBagInterface|null */
     private $flashBag;
 
     protected function tearDown(): void

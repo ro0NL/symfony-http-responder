@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Redirect extends AbstractRespond
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $url;
 
     public function __construct(string $url)
