@@ -64,6 +64,8 @@ return Config::create()
             __DIR__.'/src',
             __DIR__.'/tests',
         ])
-        ->append([__FILE__])
+        ->append([
+            __FILE__,
+        ])
     )
 ;
