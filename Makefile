@@ -62,7 +62,7 @@ qa-update:
 # misc
 clean:
 	git clean -dxf var/
-smoke-test: clean update phpunit cs psalm
+smoke-test: clean qa-update update phpunit cs psalm
 shell:
 	${qa} /bin/sh
 composer-normalize: install
