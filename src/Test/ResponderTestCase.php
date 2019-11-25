@@ -164,7 +164,12 @@ abstract class ResponderTestCase extends TestCase
             ->withLink('href2', ['rel', 'rel2'])
             ->withLink('href3', ['rel'], ['a' => true, 'b', 'c' => 'foo bar', 'd' => false, 'e' => 'boo', 'f' => 'f']));
 
-        self::assertSame(['custom', '<href>; rel="", <href2>; rel="rel rel2", <href3>; rel="rel"; a; b; c="foo bar"; e="boo"; f'], $response->headers->get('link', null, false));
+        $reflectionMethod = new \ReflectionMethod($response->headers, 'all');
+        $actual = 1 === $reflectionMethod->getNumberOfParameters()
+            ? $response->headers->all('link')
+            : $response->headers->get('link', null, false);
+
+        self::assertSame(['custom', '<href>; rel="", <href2>; rel="rel rel2", <href3>; rel="rel"; a; b; c="foo bar"; e="boo"; f'], $actual);
     }
 
     public function testRespondUnknown(): void
