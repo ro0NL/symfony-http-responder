@@ -37,6 +37,9 @@ final class ChainResponderTest extends ResponderTestCase
         ]);
     }
 
+    /**
+     * @psalm-suppress InvalidReturnType
+     */
     protected function getResponds(): iterable
     {
         yield new TestRespondA();

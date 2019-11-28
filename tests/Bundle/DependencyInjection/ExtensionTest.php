@@ -28,7 +28,6 @@ final class ExtensionTest extends TestCase
         $container = $this->createContainer();
         /** @var Reference $decoratorRef */
         $decoratorRef = $container->getDefinition(TestService::class)->getArgument(0);
-        /** @var Definition $decorator */
         $decorator = $container->findDefinition((string) $decoratorRef);
         /** @var Definition $outer */
         $outer = $decorator->getArgument(0);

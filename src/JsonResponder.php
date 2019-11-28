@@ -23,7 +23,6 @@ final class JsonResponder extends ProvidingResponder
                     throw new \LogicException(sprintf('JSON must be a string, got "%s".', \gettype($respond->data)));
                 }
 
-                /** @var JsonResponse $response */
                 $response = JsonResponse::fromJsonString($respond->data);
             } else {
                 $response = new JsonResponse($respond->data);

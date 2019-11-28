@@ -60,6 +60,9 @@ final class TwigResponderTest extends ResponderTestCase
         ])));
     }
 
+    /**
+     * @psalm-suppress InvalidReturnType
+     */
     protected function getResponds(): iterable
     {
         yield new Template('default');

@@ -53,7 +53,7 @@ abstract class ResponderTestCase extends TestCase
             $responder->respond($respond->withStatus(999));
             self::fail();
         } catch (\LogicException $e) {
-            $this->addToAssertionCount(1);
+            self::assertTrue(true);
         }
     }
 
@@ -165,6 +165,8 @@ abstract class ResponderTestCase extends TestCase
             ->withLink('href3', ['rel'], ['a' => true, 'b', 'c' => 'foo bar', 'd' => false, 'e' => 'boo', 'f' => 'f']));
 
         $reflectionMethod = new \ReflectionMethod($response->headers, 'all');
+
+        /** @psalm-suppress TooManyArguments */
         $actual = 1 === $reflectionMethod->getNumberOfParameters()
             ? $response->headers->all('link')
             : $response->headers->get('link', null, false);
@@ -179,7 +181,7 @@ abstract class ResponderTestCase extends TestCase
         if (static::IS_CATCH_ALL_RESPONDER) {
             $responder->respond($this->createMock(Respond::class));
 
-            $this->addToAssertionCount(1);
+            self::assertTrue(true);
 
             return;
         }

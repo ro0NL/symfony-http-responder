@@ -135,6 +135,9 @@ final class FileResponderTest extends ResponderTestCase
         return new FileResponder();
     }
 
+    /**
+     * @psalm-suppress InvalidReturnType
+     */
     protected function getResponds(): iterable
     {
         yield new File(__FILE__);
