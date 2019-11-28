@@ -142,8 +142,8 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
 [master:travis]: https://travis-ci.com/ro0NL/symfony-http-responder
 [master:travis:img]: https://img.shields.io/travis/com/ro0NL/symfony-http-responder/master.svg?style=flat-square
-[packagist]: https://packagist.org/packages/ro0NL/http-responder
-[packagist:img]: https://img.shields.io/packagist/v/ro0NL/http-responder.svg?style=flat-square
+[packagist]: https://packagist.org/packages/ro0nl/http-responder
+[packagist:img]: https://img.shields.io/packagist/v/ro0nl/http-responder.svg?style=flat-square
 [wiki:adr]: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
 [wiki:compositioninheritance]: https://en.wikipedia.org/wiki/Composition_over_inheritance
 [sf:controller]: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
