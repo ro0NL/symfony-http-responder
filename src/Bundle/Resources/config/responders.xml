@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" autowire="true" />
+        <instanceof id="ro0NL\HttpResponder\Responder">
+            <tag name="http_responder" priority="-1024"/>
+        </instanceof>
+
+        <service id=".http_responder.default" class="ro0NL\HttpResponder\DefaultResponder"/>
+        <service id=".http_responder.file" class="ro0NL\HttpResponder\FileResponder"/>
+        <service id=".http_responder.json" class="ro0NL\HttpResponder\JsonResponder"/>
+        <service id=".http_responder.twig" class="ro0NL\HttpResponder\Bridge\Twig\TwigResponder"/>
+        <service id=".http_responder.routing" class="ro0NL\HttpResponder\Bridge\Routing\RouterResponder"/>
+    </services>
+</container>

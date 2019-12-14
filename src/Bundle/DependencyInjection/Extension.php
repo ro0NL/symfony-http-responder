@@ -8,7 +8,7 @@ use ro0NL\HttpResponder\ProvidingResponder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
@@ -26,9 +26,9 @@ final class Extension extends BaseExtension
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
-        $loader->load('services.php');
-        $loader->load('responders.php');
+        $loader = new XmlFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
+        $loader->load('services.xml');
+        $loader->load('responders.xml');
 
         $container->registerForAutoconfiguration(ProvidingResponder::class)
             ->addTag('http_responder')
