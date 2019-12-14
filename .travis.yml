@@ -10,6 +10,7 @@ jobs:
     - stage: Unit tests
     - env: DEPS=low
     - env: PHP=7.3
+    - env: PHP=7.4
     - stage: Code quality
       script: make cs psalm
 
