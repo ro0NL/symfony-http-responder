@@ -13,6 +13,9 @@ use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ */
 final class ChainResponderTest extends ResponderTestCase
 {
     public function testRespond(): void
@@ -61,7 +64,9 @@ final class TestChainedResponder implements Responder
 
 final class TestChainedResponderAggregate extends ProvidingResponder
 {
-    /** @psalm-suppress MoreSpecificReturnType */
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     */
     protected function getProviders(): iterable
     {
         /** @psalm-suppress UnusedClosureParam */

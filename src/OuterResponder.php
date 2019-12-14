@@ -17,7 +17,7 @@ final class OuterResponder implements Responder
     private $responder;
     private $flashBag;
 
-    public function __construct(Responder $responder, FlashBagInterface $flashBag = null)
+    public function __construct(Responder $responder, ?FlashBagInterface $flashBag = null)
     {
         $this->responder = $responder;
         $this->flashBag = $flashBag;

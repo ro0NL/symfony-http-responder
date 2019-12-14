@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class ChainResponder implements Responder
 {
-    /**
-     * @var iterable<int, Responder>
-     */
+    /** @var iterable<int, Responder> */
     private $responders;
 
     /**

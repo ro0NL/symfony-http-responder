@@ -13,6 +13,9 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\ArrayLoader;
 
+/**
+ * @internal
+ */
 final class TwigResponderTest extends ResponderTestCase
 {
     public function testRespond(): void

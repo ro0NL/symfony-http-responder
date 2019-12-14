@@ -11,6 +11,9 @@ use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @internal
+ */
 final class RouterResponderTest extends ResponderTestCase
 {
     protected const DEFAULT_RESPONSE_CLASS = RedirectResponse::class;

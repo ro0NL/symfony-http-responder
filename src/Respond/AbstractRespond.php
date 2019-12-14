@@ -15,35 +15,25 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractRespond implements Respond
 {
-    /**
-     * @var array{0: int, 1: string|null}
-     */
+    /** @var array{0: int, 1: string|null} */
     public $status = [Response::HTTP_OK, null];
 
-    /**
-     * @var \DateTimeInterface|null
-     */
+    /** @var null|\DateTimeInterface */
     public $date;
 
-    /**
-     * @var array<string, string[]>
-     */
+    /** @var array<string, string[]> */
     public $headers = [];
 
-    /**
-     * @var array<string, scalar[]>
-     */
+    /** @var array<string, scalar[]> */
     public $flashes = [];
 
-    /**
-     * @var GenericLinkProvider|null
-     */
+    /** @var null|GenericLinkProvider */
     public $linkProvider;
 
     /**
      * @return $this
      */
-    public function withStatus(int $code, string $text = null): self
+    public function withStatus(int $code, ?string $text = null): self
     {
         $this->status = [$code, $text];
 
@@ -139,7 +129,8 @@ abstract class AbstractRespond implements Respond
         foreach ($attributes as $attribute => $value) {
             if (false === $value) {
                 continue;
-            } elseif (true === $value) {
+            }
+            if (true === $value) {
                 $attribute = $value = (string) $attribute;
             } elseif (\is_int($attribute)) {
                 $attribute = $value = (string) $value;

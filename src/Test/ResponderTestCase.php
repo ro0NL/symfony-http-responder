@@ -24,7 +24,7 @@ abstract class ResponderTestCase extends TestCase
     protected const DEFAULT_RESPONSE_STATUS = 200;
     protected const IS_CATCH_ALL_RESPONDER = false;
 
-    /** @var FlashBagInterface|null */
+    /** @var null|FlashBagInterface */
     private $flashBag;
 
     protected function tearDown(): void
@@ -207,7 +207,7 @@ abstract class ResponderTestCase extends TestCase
         }
     }
 
-    protected static function assertResponse(Response $response, int $status = null): void
+    protected static function assertResponse(Response $response, ?int $status = null): void
     {
         /** @var class-string $class */
         $class = static::DEFAULT_RESPONSE_CLASS;

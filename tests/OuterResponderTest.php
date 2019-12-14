@@ -12,6 +12,9 @@ use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ */
 final class OuterResponderTest extends ResponderTestCase
 {
     protected const IS_CATCH_ALL_RESPONDER = true;

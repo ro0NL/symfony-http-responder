@@ -11,6 +11,9 @@ use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
+/**
+ * @internal
+ */
 final class FileResponderTest extends ResponderTestCase
 {
     protected const DEFAULT_RESPONSE_CLASS = BinaryFileResponse::class;
@@ -18,7 +21,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFile($file): void
     {
@@ -35,7 +38,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFileWithEtag($file): void
     {
@@ -52,7 +55,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFileWithAllAttributes($file): void
     {
@@ -69,7 +72,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFileWithNoAttributes($file): void
     {
@@ -86,7 +89,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFileAsInlineContent($file): void
     {
@@ -102,7 +105,7 @@ final class FileResponderTest extends ResponderTestCase
     /**
      * @dataProvider provideFiles
      *
-     * @param string|\SplFileInfo $file
+     * @param \SplFileInfo|string $file
      */
     public function testRespondFileAsDownload($file): void
     {

@@ -11,9 +11,9 @@ final class Json extends AbstractRespond
 {
     /** @var mixed */
     public $data;
-    /** @var int|null */
+    /** @var null|int */
     public $encodingOptions;
-    /** @var string|null */
+    /** @var null|string */
     public $callback;
     /** @var bool */
     public $raw = false;
@@ -21,13 +21,13 @@ final class Json extends AbstractRespond
     /**
      * @param mixed $data
      */
-    public function __construct($data, int $encodingOptions = null)
+    public function __construct($data, ?int $encodingOptions = null)
     {
         $this->data = $data;
         $this->encodingOptions = $encodingOptions;
     }
 
-    public static function raw(string $data, int $encodingOptions = null): self
+    public static function raw(string $data, ?int $encodingOptions = null): self
     {
         $respond = new self($data, $encodingOptions);
         $respond->raw = true;

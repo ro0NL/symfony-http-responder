@@ -14,6 +14,9 @@ use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * @internal
+ */
 final class DefaultResponderTest extends ResponderTestCase
 {
     public function testRespondRaw(): void

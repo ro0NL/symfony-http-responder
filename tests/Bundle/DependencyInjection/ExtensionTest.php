@@ -21,6 +21,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
+/**
+ * @internal
+ */
 final class ExtensionTest extends TestCase
 {
     public function testExtension(): void

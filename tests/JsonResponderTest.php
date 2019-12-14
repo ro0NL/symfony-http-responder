@@ -10,6 +10,9 @@ use ro0NL\HttpResponder\Responder;
 use ro0NL\HttpResponder\Test\ResponderTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @internal
+ */
 final class JsonResponderTest extends ResponderTestCase
 {
     protected const DEFAULT_RESPONSE_CLASS = JsonResponse::class;
