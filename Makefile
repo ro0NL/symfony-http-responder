@@ -2,7 +2,7 @@ ifndef PHP
 	PHP=7.2
 endif
 ifndef PHPUNIT
-	PHPUNIT=8.3
+	PHPUNIT=8
 endif
 
 qa_image=jakzal/phpqa:php${PHP}-alpine
