@@ -14,8 +14,10 @@ $rules = [
     'header_comment' => ['header' => ''],
     'list_syntax' => ['syntax' => 'short'],
     'nullable_type_declaration_for_default_null_value' => true,
+    'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
     'php_unit_test_class_requires_covers' => false,
     'phpdoc_line_span' => ['const' => 'single', 'method' => 'multi', 'property' => 'single'],
+    'phpdoc_to_comment' => false,
     'self_static_accessor' => true,
 ];
 
