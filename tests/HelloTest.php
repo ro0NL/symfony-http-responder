@@ -9,7 +9,6 @@ use Vendor\Package\Hello;
 
 /**
  * @internal
- * @covers \Vendor\Package\Hello
  */
 final class HelloTest extends TestCase
 {
