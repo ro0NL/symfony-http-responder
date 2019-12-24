@@ -38,6 +38,20 @@ return [
 ];
 ```
 
+Using the framework, a default view listener invokes the responder out-of-the-box. You may update your controller
+actions as such:
+
+```php
+use ro0NL\HttpResponder\Respond\Respond;
+
+// ...
+
+public function __invoke(Request $request): Respond
+{
+    return new Template('home.html.twig');
+}
+```
+
 # Create a Providing Responder
 
 Provide custom respond types using the `ProvidingResponder`.
