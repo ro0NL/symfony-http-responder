@@ -15,5 +15,10 @@
             </argument>
         </service>
         <service id="ro0NL\HttpResponder\Responder" alias="http_responder"/>
+
+        <service id=".http_responder.respond_listener" class="ro0NL\HttpResponder\Bundle\EventListener\RespondListener">
+            <argument key="$responder" type="service" id="http_responder"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>
