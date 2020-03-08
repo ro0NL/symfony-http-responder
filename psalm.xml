@@ -6,7 +6,6 @@
     autoloader="psalm-autoload.php"
     cacheDirectory="var/psalm"
     totallyTyped="true"
-    findUnusedCode="true"
 >
     <projectFiles>
         <directory name="src"/>
