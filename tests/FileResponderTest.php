@@ -59,11 +59,7 @@ final class FileResponderTest extends ResponderTestCase
      */
     public function testRespondFileWithAllAttributes($file): void
     {
-        /**
-         * @psalm-suppress MixedArgument
-         *
-         * @var BinaryFileResponse
-         */
+        /** @var BinaryFileResponse $response */
         $response = $this->doRespond(new File($file, File::USE_ALL));
         $headers = $response->headers->allPreserveCase();
 
