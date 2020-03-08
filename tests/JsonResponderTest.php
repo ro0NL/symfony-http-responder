@@ -105,9 +105,6 @@ final class JsonResponderTest extends ResponderTestCase
         return new JsonResponder();
     }
 
-    /**
-     * @psalm-suppress InvalidReturnType
-     */
     protected function getResponds(): iterable
     {
         yield new Json(null);

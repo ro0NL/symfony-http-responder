@@ -46,6 +46,9 @@ abstract class ProvidingResponder implements ResponderAggregate
                 /** @var callable(Respond):Response */
                 private $callback;
 
+                /**
+                 * @param callable(Respond):Response $callback
+                 */
                 public function __construct(callable $callback)
                 {
                     $this->callback = $callback;

@@ -30,7 +30,6 @@ final class DefaultResponder extends ProvidingResponder
             return new RedirectResponse($respond->url);
         };
 
-        /** @psalm-suppress UnusedClosureParam */
         yield NoContent::class => static function (NoContent $respond): Response {
             return new Response('');
         };

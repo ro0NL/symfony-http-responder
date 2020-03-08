@@ -72,9 +72,6 @@ final class RouterResponderTest extends ResponderTestCase
         return new RouterResponder($urlGenerator);
     }
 
-    /**
-     * @psalm-suppress InvalidReturnType
-     */
     protected function getResponds(): iterable
     {
         yield new RouteRedirect('name');
